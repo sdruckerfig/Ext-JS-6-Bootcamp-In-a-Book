@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.define(&#39;PatientChart.view.research.clinicaltrails.ClinicalTrials&#39;, {
+    extend: &#39;Ext.window.Window&#39;,
+
+    requires: [
+        &#39;PatientChart.view.research.clinicaltrails.ClinicalTrialsController&#39;,
+        &#39;PatientChart.view.research.clinicaltrails.ClinicalTrialsModel&#39;,
+        &#39;Ext.toolbar.Paging&#39;
+    ],
+
+    controller: &#39;research-clinicaltrails-clinicaltrials&#39;,
+    viewModel: {
+        type: &#39;research-clinicaltrails-clinicaltrials&#39;
+    },
+
+    alias: &#39;widget.clinicaltrialswindow&#39;,
+    constrain: true,
+    maximizable: true,
+    autoShow: true,
+    height: 397,
+    width: 717,
+    stateId: &#39;researchClinicalTrialsWindow&#39;,
+    stateful: true,
+    title: &#39;Clinical Trials&#39;,
+    layout: &#39;border&#39;,
+    items: [{
+            xtype: &#39;grid&#39;,
+            region: &#39;center&#39;,
+            header: false,
+            flex: 1,
+            stateId: &#39;researchClinicalTrialsGrid&#39;,
+            stateful: true,
+            bind: {
+                store: &#39;{ClinicalTrials}&#39;,
+                selection: &#39;{selectedTrial}&#39;
+            },
+            columns: [{
+                xtype: &#39;rownumberer&#39;,
+                width: 70
+            }, {
+                xtype: &#39;gridcolumn&#39;,
+                dataIndex: &#39;title&#39;,
+                text: &#39;Title&#39;,
+                flex: 1
+            }, {
+                xtype: &#39;datecolumn&#39;,
+                dataIndex: &#39;last_changed&#39;,
+                text: &#39;Updated&#39;,
+                format: &#39;m/d/Y&#39;
+            }, {
+                xtype: &#39;gridcolumn&#39;,
+                dataIndex: &#39;status&#39;,
+                text: &#39;Status&#39;
+            }, {
+                xtype: &#39;numbercolumn&#39;,
+                align: &#39;right&#39;,
+                width: 70,
+                dataIndex: &#39;score&#39;,
+                text: &#39;Rel&#39;
+            }]
+        }, {
+            xtype: &#39;panel&#39;,
+            flex: 1,
+            region: &#39;south&#39;,
+            split: true,
+            bodyPadding: 5,
+            collapsible: true,
+            title: &#39;Details&#39;,
+            collapseMode: &#39;mini&#39;,
+            bind: {
+                data: &#39;{selectedTrial}&#39;
+            },
+            tpl: [
+                &#39;&lt;tpl if=&quot;title&quot;&gt;&#39;,
+                &#39;&lt;div class=&quot;ctTitle&quot;&gt;{title}&lt;/div&gt;&#39;,
+                &#39;&lt;div&gt;&#39;,
+                &#39;&lt;span class=&quot;ctPrompt&quot;&gt;Status:&lt;/span&gt;&#39;,
+                &#39;{status}&#39;,
+                &#39;&lt;/div&gt;&#39;,
+                &#39;&lt;div&gt;&#39;,
+                &#39;&lt;span class=&quot;ctPrompt&quot;&gt;Updated:&lt;/span&gt;&#39;,
+                &#39;{last_changed:date}&#39;,
+                &#39;&lt;/div&gt;&#39;,
+                &#39;&lt;div&gt;&#39;,
+                &#39;&lt;span class=&quot;ctPrompt&quot;&gt;Conditions:&lt;/span&gt;&#39;,
+                &#39;{condition_summary}&#39;,
+                &#39;&lt;/div&gt;&#39;,
+                &#39;&lt;div&gt;&#39;,
+                &#39;&lt;span class=&quot;ctPrompt&quot;&gt;Intervention:&lt;/span&gt;&#39;,
+                &#39;{intervention_summary}&#39;,
+                &#39;&lt;/div&gt;&#39;,
+                &#39;&lt;/tpl&gt;&#39;
+            ],
+            dockedItems: [{
+                xtype: &#39;toolbar&#39;,
+                dock: &#39;bottom&#39;,
+                bind: {
+                    disabled: &#39;{!selectedTrial}&#39;
+                },
+                layout: {
+                    pack: &#39;center&#39;
+                },
+                items: [{
+                    text: &#39;See More Details&#39;,
+                    handler: &#39;displayTrialWebSite&#39;
+                }]
+            }]
+        }
+
+    ],
+    tools: [{
+        type: &#39;gear&#39;,
+        callback: &#39;resetGridState&#39; 
+    }, {
+        type: &#39;refresh&#39;
+    }],
+    listeners: {
+        afterrender: &#39;onAfterRender&#39;
+    },
+
+    dockedItems: [{
+        xtype: &#39;pagingtoolbar&#39;,
+        dock: &#39;bottom&#39;,
+        layout: {
+            pack: &#39;center&#39;
+        },
+        bind: {
+            store: &#39;{ClinicalTrials}&#39;
+        }
+    }]
+
+});</pre>
+</body>
+</html>

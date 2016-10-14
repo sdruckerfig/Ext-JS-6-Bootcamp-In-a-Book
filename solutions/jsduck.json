@@ -1,0 +1,23 @@
+{
+    "--title" : "Doctor Ext",
+    "--welcome": "../docresources/welcome.html",
+    "--": [
+     "../ext/classic/classic/src",
+     "../ext/packages/core/src",
+     "../shared/mixins",
+     "walk12-1/app",
+     "walk12-1/classic/src"
+    ],
+    "--warnings": [
+        "-all:../ext/classic/classic/src",
+        "-all:../ext/packages/core/src"
+    ],
+    "--seo" : true,
+    "--ignore-html": [
+        "locale",
+        "debug"
+    ],
+    "--images": "../docresources",
+    "--builtin-classes": true,
+    "--output" : "docs"
+}

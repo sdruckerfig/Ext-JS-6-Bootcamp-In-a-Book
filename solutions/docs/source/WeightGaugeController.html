@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.define(&#39;PatientChart.view.patientinfo.graphs.WeightGaugeController&#39;, {
+    extend: &#39;Ext.app.ViewController&#39;,
+    alias: &#39;controller.patientinfo-graphs-weightgauge&#39;,
+
+    requires: [
+        &#39;Ext.chart.PolarChart&#39;
+    ],
+    onAfterRender: function(cmp) {
+        var binding = this.getViewModel().bind(&#39;{selectedStat}&#39;, this.onRecordChange, this);
+    },
+
+    onRecordChange: function(rec) {
+
+        if (rec) {
+            var height = rec.get(&#39;height&#39;);
+            var chartSectors = [{
+                // start: height * 1.8,
+                end: height * 2.285,
+                label: &#39;Normal&#39;,
+                color: &#39;green&#39;
+            }, {
+                start: height * 2.286,
+                color: &#39;yellow&#39;
+            }, {
+                start: height * 2.85,
+                end: 350,
+                label: &#39;Obese&#39;,
+                color: &#39;red&#39;
+            }];
+
+            var newSeries = {
+                type: &#39;gauge&#39;,
+                angleField: &#39;weight&#39;,
+                donut: 50,
+                colors: [&#39;#0082c9&#39;],
+                maximum: 350,
+                needle: true,
+                sectors: chartSectors
+            };
+
+            var config = {
+                xtype: &#39;polar&#39;,
+                bind: {
+                    store: &#39;{selectedStatStore}&#39;
+                },
+                series: [newSeries]
+            }
+
+            this.getView().removeAll(true);
+            this.getView().add(config);
+        }
+
+    }
+
+});</pre>
+</body>
+</html>

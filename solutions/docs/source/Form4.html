@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.define(&#39;PatientChart.view.patientinfo.procedures.Form&#39;, {
+    extend: &#39;Ext.form.Panel&#39;,
+    alias: &#39;widget.patientprocedureform&#39;,
+    requires: [
+        &#39;Ext.layout.container.Column&#39;,
+        &#39;Ext.form.field.Date&#39;,
+        &#39;Ext.form.field.Number&#39;,
+        &#39;PatientChart.view.patientinfo.procedures.ProceduresCombo&#39;,
+        &#39;Ext.ux.form.TinyMCETextArea&#39;
+    ],
+
+    bind: {
+        disabled: &#39;{!selectedProcedure}&#39;
+    },
+
+
+    bodyPadding: 10,
+
+    defaults: {
+        anchor: &#39;100%&#39;
+    },
+
+    modelValidation: true,
+
+
+    items: [{
+        xtype: &#39;container&#39;,
+        margin: &#39;0 0 10 0&#39;,
+        layout: &#39;column&#39;,
+        defaults: {
+            columnWidth: 0.5
+        },
+        items: [{
+            xtype: &#39;datefield&#39;,
+            name: &#39;date&#39;,
+            fieldLabel: &#39;Date&#39;,
+            margin: &#39;0 5 0 0&#39;,
+            bind: &#39;{selectedProcedure.date}&#39;
+        }, {
+            xtype: &#39;numberfield&#39;,
+            name: &#39;fee&#39;,
+            fieldLabel: &#39;Fee&#39;,
+            minValue: 0,
+            bind: &#39;{selectedProcedure.fee}&#39;
+        }]
+    }, {
+        xtype: &#39;procedurescombo&#39;,
+        fieldLabel: &#39;Procedure&#39;,
+        name: &#39;procedureId&#39;,
+        bind: &#39;{selectedProcedure.procedureId}&#39;
+    }, {
+        xtype: &#39;textfield&#39;,
+        name: &#39;description&#39;,
+        fieldLabel: &#39;Description&#39;,
+        bind: &#39;{selectedProcedure.description}&#39;
+    }, {
+        xtype: &#39;tinymce&#39;,
+        name: &#39;notes&#39;,
+        anchor: &#39;100% -145&#39;,
+        fieldLabel: &#39;Notes&#39;,
+        labelAlign: &#39;top&#39;,
+        bind: &#39;{selectedProcedure.notes}&#39;
+    }, {
+        xtype: &#39;hiddenfield&#39;,
+        name: &#39;id&#39;,
+        bind: &#39;{selectedProcedure.id}&#39;
+    }, {
+        xtype: &#39;hiddenfield&#39;,
+        name: &#39;patientId&#39;,
+        bind: &#39;{patient.id}&#39;
+    }],
+
+    tools: [{
+        type: &#39;save&#39;,
+        formBind: true,
+        callback: &#39;onSaveForm&#39;
+    }]
+
+
+});</pre>
+</body>
+</html>

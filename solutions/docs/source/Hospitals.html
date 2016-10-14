@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.define(&#39;PatientChart.view.research.hospitals.Hospitals&#39;, {
+    extend: &#39;Ext.window.Window&#39;,
+    alias: &#39;widget.hospitalstatswindow&#39;,
+    requires: [
+        &#39;PatientChart.view.research.hospitals.HospitalsController&#39;,
+        &#39;PatientChart.view.research.hospitals.HospitalsModel&#39;,
+        &#39;Ext.tree.Panel&#39;,
+        &#39;Ext.tree.View&#39;
+    ],
+
+    controller: &#39;research-hospitals-hospitals&#39;,
+    viewModel: {
+        type: &#39;research-hospitals-hospitals&#39;
+    },
+
+    layout: &#39;border&#39;,
+
+    constrain: true,
+    maximizable: true,
+    autoShow: true,
+    height: 475,
+    width: 1000,
+    title: &#39;Hospital Treatment Costs per Diagnosis&#39;,
+
+    items: [{
+        region: &#39;west&#39;,
+        split: true,
+        weight: 50,
+        width: 200,
+        layout: &#39;accordion&#39;,
+        collapsible: true,
+        header: false,
+        title: &#39;Filter&#39;,
+        items: [{
+                xtype: &#39;treepanel&#39;,
+                title: &#39;By State&#39;,
+                rootVisible: false,
+                useArrows: true,
+                reference: &#39;statefiltertree&#39;,
+                bind: {
+                    store: &#39;{StateFilters}&#39;
+                },
+                listeners: {
+                    checkchange: &#39;onTreepanelCheckChange&#39;
+                }
+            }, {
+                xtype: &#39;treepanel&#39;,
+                reference: &#39;procedurefiltertree&#39;,
+                title: &#39;By Diagnosis&#39;,
+                rootVisible: false,
+                useArrows: true,
+                bind: {
+                    store: &#39;{ProcedureFilters}&#39;
+                },
+                listeners: {
+                    checkchange: &#39;onTreepanelCheckChange&#39;
+                }
+            }
+
+        ]
+    }, {
+        xtype: &#39;gridpanel&#39;,
+        region: &#39;center&#39;,
+        bind: {
+            store: &#39;{HospitalStats}&#39;
+        },
+        reference: &#39;datagrid&#39;,
+        title: &#39;Inpatient Statistics&#39;,
+        header: false,
+        emptyText: &#39;Please make a selection&#39;,
+        features: [{
+            ftype: &#39;groupingsummary&#39;,
+            hideGroupedHeader: true
+        }],
+        columns: [{
+            xtype: &#39;gridcolumn&#39;,
+            summaryType: &#39;count&#39;,
+            dataIndex: &#39;providername&#39;,
+            text: &#39;Provider&#39;,
+            flex: 1,
+            summaryRenderer: function(value, summaryData, dataIndex) {
+                return Ext.util.Format.plural(value, &quot; Provider&quot;);
+            }
+        }, {
+            xtype: &#39;gridcolumn&#39;,
+            width: 50,
+            dataIndex: &#39;providerstate&#39;,
+            text: &#39;State&#39;
+        }, {
+            xtype: &#39;gridcolumn&#39;,
+            dataIndex: &#39;drgcode&#39;,
+            text: &#39;Diagnosis&#39;,
+            hidden: true,
+            flex: 1
+        }, {
+            xtype: &#39;numbercolumn&#39;,
+            summaryType: &#39;average&#39;,
+            width: 150,
+            align: &#39;right&#39;,
+            dataIndex: &#39;averagecoveredcharges&#39;,
+            text: &#39;Avg Covered&lt;br&gt;Charges&#39;,
+            renderer: Ext.util.Format.usMoney,
+            summaryRenderer: function(value, summaryData, dataIndex) {
+                return &quot;Avg: &quot; + Ext.util.Format.currency(value);
+            }
+        }, {
+            xtype: &#39;numbercolumn&#39;,
+            width: 150,
+            summaryType: &#39;average&#39;,
+            align: &#39;right&#39;,
+            dataIndex: &#39;averagemedicarepayments&#39;,
+            text: &#39;Avg Medicare&lt;br&gt;Payments&#39;,
+            renderer: Ext.util.Format.usMoney,
+            summaryRenderer: function(value, summaryData, dataIndex) {
+                return &quot;Avg: &quot; + Ext.util.Format.currency(value);
+            }
+        }, {
+            xtype: &#39;numbercolumn&#39;,
+            width: 150,
+            summaryType: &#39;average&#39;,
+            align: &#39;right&#39;,
+            dataIndex: &#39;averagetotalpayments&#39;,
+            text: &#39;Avg Tot. Payments&#39;,
+            renderer: Ext.util.Format.usMoney,
+            summaryRenderer: function(value, summaryData, dataIndex) {
+                return &quot;Avg: &quot; + Ext.util.Format.currency(value);
+            }
+        }, {
+            xtype: &#39;numbercolumn&#39;,
+            width: 100,
+            align: &#39;right&#39;,
+            dataIndex: &#39;totaldischarges&#39;,
+            text: &#39;Patients&#39;,
+            format: &#39;0,000&#39;,
+            summaryType: &#39;sum&#39;,
+            summaryRenderer: function(value, summaryData, dataIndex) {
+                return &quot;Total: &quot; + value
+            }
+        }]
+    }]
+});</pre>
+</body>
+</html>

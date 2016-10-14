@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='PatientChart-controller-Main'>/**
+</span> * Route handling, global store loading, and 
+ * authentication / authorization services
+ */
+
+Ext.define(&#39;PatientChart.controller.Main&#39;, {
+    extend: &#39;Ext.app.Controller&#39;,
+
+    config: {
+<span id='PatientChart-controller-Main-cfg-currentPerspective'>        /**
+</span>         * May be any of the following:
+         * &#39;adminperspective&#39;, &#39;patientinfoperspective&#39;, 
+         * &#39;researchperspecive&#39;
+         */
+        currentPerspective: null
+    },
+
+    requires: [
+        &#39;Ext.app.route.Route&#39;,
+        &#39;PatientChart.view.about.About&#39;,
+        &#39;PatientChart.view.admin.Admin&#39;,
+        &#39;PatientChart.view.admin.allergies.Allergies&#39;,
+        &#39;PatientChart.view.admin.billingcodes.BillingCodes&#39;,
+        &#39;PatientChart.view.admin.preexistingconditions.PreExistingConditions&#39;,
+        &#39;PatientChart.view.research.Research&#39;,
+        &#39;PatientChart.view.research.clinicaltrails.ClinicalTrials&#39;,
+        &#39;PatientChart.view.patientinfo.Chooser&#39;,
+        &#39;PatientChart.view.admin.users.Users&#39;
+    ],
+
+<span id='PatientChart-controller-Main-cfg-models'>    models: [
+</span>        &#39;Patient&#39;,
+        &#39;Allergy&#39;,
+        &#39;PatientDailyStat&#39;
+    ],
+<span id='PatientChart-controller-Main-cfg-stores'>    stores: [
+</span>        &#39;Allergies&#39;,
+        &#39;PreExistingConditions&#39;,
+        &#39;BillingCodes&#39;
+    ],
+<span id='PatientChart-controller-Main-cfg-refs'>    refs: {
+</span>        centerRegion: &#39;viewport &gt; panel[region=center]&#39;,
+        navButtons: &#39;mainnavbar&#39;,
+        viewport: &#39;viewport&#39;
+    },
+
+<span id='PatientChart-controller-Main-cfg-routes'>    routes: {
+</span>        &#39;patient/search&#39;: {
+            action: &#39;onPatientSearch&#39;,
+            before: &#39;onAuthenticate&#39;
+        },
+        &#39;patient/:id/:tab&#39;: {
+            action: &#39;onLoadPatientRecord&#39;,
+            conditions: {
+                &#39;:id&#39;: &#39;([0-9]+)&#39;
+            },
+            before: &#39;onAuthenticate&#39;
+        },
+        &#39;admin&#39;: {
+            action: &#39;onAdminPerspective&#39;,
+            before: &#39;onAuthenticate&#39;
+        },
+        &#39;research&#39;: {
+            action: &#39;onResearchPerspective&#39;
+        },
+        &#39;admin/:xtype&#39;: {
+            action: &#39;onAdminViewWindow&#39;,
+            before: &#39;onAuthenticate&#39;
+        },
+        &#39;research/:xtype&#39;: {
+            action: &#39;onResearchViewWindow&#39;
+        },
+        &#39;logout&#39;: &#39;onLogout&#39;
+    },
+<span id='PatientChart-controller-Main-method-onPatientSearch'>    onPatientSearch: function() {
+</span>        // patientchartperspective is the xtype for the 
+        // patientinfo view
+        this.setCurrentPerspective(&#39;patientinfoperspective&#39;);
+        this.getCenterRegion().add({
+            xtype: &#39;patientsearchwindow&#39;,
+            modal: true,
+            constrain: true
+        }).show();
+    },
+<span id='PatientChart-controller-Main-method-updateCurrentPerspective'>    updateCurrentPerspective: function(newPerspective, oldPerspective) {
+</span>        if (newPerspective != oldPerspective) {
+            if (this.getCenterRegion()) {
+                this.getCenterRegion().destroy();
+            }
+            this.getViewport().add({
+                xtype: newPerspective,
+                region: &#39;center&#39;
+            });
+        }
+        this.getNavButtons().down(&#39;#btn&#39; + Ext.String.capitalize(newPerspective)).setPressed(true);
+    },
+<span id='PatientChart-controller-Main-method-onLoadPatientRecord'>    onLoadPatientRecord: function(id, tab) {
+</span>        this.setCurrentPerspective(&#39;patientinfoperspective&#39;);
+
+        var patient =
+            this.getCenterRegion().getViewModel().get(&#39;patient&#39;);
+        if (!patient || id != patient.id) {
+            this.getCenterRegion()
+                .getController()
+                .loadPatientRecord(id);
+        }
+
+        if (tab) {
+            var tp = this.getCenterRegion().down(&#39;tabpanel&#39;);
+            tp.setActiveTab(
+                tp.down(&#39;panel[reference=&#39; + tab + &#39;]&#39;)
+            );
+        }
+    },
+<span id='PatientChart-controller-Main-method-onAdminPerspective'>    onAdminPerspective: function() {
+</span>        this.setCurrentPerspective(&#39;adminperspective&#39;);
+    },
+<span id='PatientChart-controller-Main-method-onResearchPerspective'>    onResearchPerspective: function() {
+</span>        this.setCurrentPerspective(&#39;researchperspective&#39;);
+    },
+<span id='PatientChart-controller-Main-method-onAdminViewWindow'>    onAdminViewWindow: function(xtype) {
+</span>        this.setCurrentPerspective(&#39;adminperspective&#39;);
+
+        var win = Ext.ComponentQuery.query(xtype);
+        if (win.length == 1) {
+            this.focusWin(win[0]);
+        } else {
+            this.getCenterRegion().add({
+                xtype: xtype
+            }).show();
+        }
+    },
+<span id='PatientChart-controller-Main-method-focusWin'>    /**
+</span>     * Brings window to front, sets focus, and executes 
+     * frame animation effect
+     *
+     * @param {Object} win A required Ext.window.Window 
+     * @param {Boolean} [noframe] Set to true to prevent frame  
+     * animation.
+     * 
+     * @return {Object} The window
+     */
+    focusWin: function(win) {
+        Ext.WindowManager.bringToFront(win);
+        win.focus();
+        win.getEl().frame();
+    },
+<span id='PatientChart-controller-Main-method-onResearchViewWindow'>    onResearchViewWindow: function(xtype) {
+</span>        this.setCurrentPerspective(&#39;researchperspective&#39;);
+
+        var win = Ext.ComponentQuery.query(xtype);
+        if (win.length == 1) {
+            this.focusWin(win[0]);
+        } else {
+            this.getCenterRegion().add({
+                xtype: xtype
+            }).show();
+        }
+    },
+<span id='PatientChart-controller-Main-method-onAuthenticate'>    onAuthenticate: function() {
+</span>        var action = arguments[arguments.length - 1],
+            me = this;
+        if (!PatientChart.credentials) {
+            Ext.Msg.prompt(
+                &quot;Enter your user ID&quot;,
+                &quot;Enter a username to identify yourself&quot;,
+                function(b, text) {
+                    if (b == &#39;ok&#39;) {
+                        Ext.Ajax.request({
+                            url: &#39;http://webapps.figleaf.com/rest/prototypes/auth.json&#39;,
+                            jsonData: {
+                                username: text
+                            },
+                            withCredentials: true,
+                            success: function(response, opts) {
+                                var obj = Ext.decode(response.responseText);
+                                if (obj &amp;&amp; obj.success) {
+                                    PatientChart.credentials = {
+                                        username: obj.username,
+                                        role: obj.role
+                                    };
+                                    // add credentials
+                                    var vm = me.getViewport().getViewModel();
+                                    vm.set(&#39;userName&#39;, obj.username);
+                                    vm.set(&#39;role&#39;, obj.role);
+                                    if (
+                                        (location.hash.indexOf(&#39;#patient&#39;) ||
+                                            location.hash.indexOf(&#39;#admin&#39;)) &amp;&amp;
+                                        obj.role == &#39;admin&#39;) {
+                                        action.resume();
+                                    } else {
+                                        action.stop();
+                                    }
+                                } else {
+                                    Ext.Msg.alert(&quot;Authentication Failed&quot;, &quot;Try again&quot;);
+                                    action.stop();
+                                }
+                            },
+                            failure: function() {
+                                Ext.Msg.alert(&quot;Authentication Failed&quot;, &quot;Try again&quot;);
+                                action.stop();
+                            }
+                        });
+                    } else {
+                        Ext.Msg.alert(&#39;Authentication Failed&#39;,
+                            &#39;Please try again&#39;);
+                        action.stop();
+                    }
+                },
+                this
+            );
+        } else {
+            action.resume();
+        }
+    },
+<span id='PatientChart-controller-Main-method-onLogout'>    onLogout: function() {
+</span>        var vm = this.getViewport().getViewModel();
+        vm.set(&#39;userName&#39;, &#39;anonymous&#39;);
+        vm.set(&#39;role&#39;, &#39;admin&#39;);
+        PatientChart.credentials = null;
+        this.getCenterRegion().destroy();
+        this.getViewport().add({
+            xtype: &#39;panel&#39;,
+            region: &#39;center&#39;,
+            hideHeader: true,
+            cls: &#39;appBackground&#39;
+        });
+        var btn = this.getNavButtons().down(&#39;button[pressed=true]&#39;);
+        if (btn) {
+            btn.setPressed(false);
+        }
+    }
+});</pre>
+</body>
+</html>

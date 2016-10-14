@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.define(&#39;PatientChart.view.patientinfo.PatientInfoModel&#39;, {
+    extend: &#39;Ext.app.ViewModel&#39;,
+    alias: &#39;viewmodel.patientinfo-patientinfo&#39;,
+    requires: [
+    &#39;PatientChart.model.PatientDailyStat&#39;,
+    &#39;PatientChart.model.PatientVisit&#39;
+    ],
+    data: {
+        searchFilter: &#39;&#39;,
+        selectedStat: null,
+        selectedProcedure: null
+    },
+    formulas: {
+        selectedStatStore: {
+            bind: &#39;{selectedStat}&#39;,
+            get: function(rec) {
+                if (rec) {
+                    var s = Ext.create(&#39;Ext.data.Store&#39;, {
+                        fields: [&#39;weight&#39;, &#39;height&#39;],
+                        data: [{
+                            weight: rec.get(&#39;weight&#39;),
+                            height: rec.get(&#39;height&#39;)
+                        }]
+                    });
+                    return s;
+                }
+            }
+        }
+    },
+    stores: {
+        Patients: {
+            model: &#39;PatientChart.model.Patient&#39;,
+            autoLoad: true,
+            remoteFilter: true,
+            filters: [{
+                property: &#39;lastname&#39;,
+                value: &#39;{searchFilter}&#39;
+            }],
+            proxy: {
+                type: &#39;rest&#39;,
+                url: &#39;http://webapps.figleaf.com/rest/prototypes/patient&#39;,
+                format: &#39;json&#39;,
+                reader: {
+                    type: &#39;json&#39;,
+                    rootProperty: &#39;records&#39;
+                }
+            }
+        },
+        PatientDailyStats: {
+            model: &#39;PatientChart.model.PatientDailyStat&#39;,
+            autoLoad: true,
+            remoteFilter: true,
+            groupField: &#39;month&#39;,
+            filters: [{
+                property: &#39;patientId&#39;,
+                value: &#39;{patient.id}&#39;
+            }],
+            sorters: [{
+                property: &#39;date&#39;,
+                direction: &#39;ASC&#39;
+            }],
+            listeners: {
+                &#39;load&#39;: &#39;onPatientDailyStatsLoad&#39;
+            }
+        },
+
+        PatientMediaAssets: {
+            model: &#39;PatientChart.model.PatientMediaAsset&#39;,
+            autoLoad: true,
+            sorters: [{
+                property: &#39;date&#39;,
+                direction: &#39;ASC&#39;
+            }],
+            proxy: {
+                type: &#39;rest&#39;,
+                url: &#39;http://webapps.figleaf.com/rest/prototypes/patientmedia&#39;,
+                format: &#39;json&#39;,
+                extraParams: {
+                    patientId: &#39;{patient.id}&#39;
+                },
+                reader: {
+                    type: &#39;json&#39;,
+                    rootProperty: &#39;records&#39;
+                }
+            }
+        },
+        PatientDiet: {
+            autoLoad: true,
+            remoteFilter: true,
+            fields: [
+                &#39;label&#39;, {
+                    name: &#39;qty&#39;,
+                    type: &#39;int&#39;
+                }
+            ],
+            proxy: {
+                type: &#39;rest&#39;,
+                url: &#39;http://webapps.figleaf.com/rest/prototypes/patientdiet&#39;,
+                format: &#39;json&#39;
+            },
+            filters: [{
+                property: &#39;patientId&#39;,
+                value: &#39;{patient.id}&#39;
+            }]
+        },
+
+        PatientVisits: {
+            model: &#39;PatientChart.model.PatientVisit&#39;,
+            autoLoad: true,
+            remoteFilter: true,
+            filters: [{
+                property: &#39;patientId&#39;,
+                value: &#39;{patient.id}&#39;
+            }],
+            sorters: [{
+                property: &#39;date&#39;,
+                direction: &#39;DESC&#39;
+            }]
+        }
+    }
+
+});</pre>
+</body>
+</html>

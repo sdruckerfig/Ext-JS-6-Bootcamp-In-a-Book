@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.define(&#39;PatientChart.view.research.clinicaltrails.ClinicalTrialsController&#39;, {
+    extend: &#39;Ext.app.ViewController&#39;,
+    alias: &#39;controller.research-clinicaltrails-clinicaltrials&#39;,
+
+    requires: [
+        &#39;Ext.ux.IFrame&#39;
+    ],
+    onAfterRender: function(view) {
+        this.getViewModel().getStore(&#39;ClinicalTrials&#39;).load();
+    },
+
+    onClinicalTrialsLoad: function(store) {
+        this.getView().setTitle(&quot;Clinical Trials - &quot; + Ext.util.Format.number(store.getTotalCount(), &#39;0,000&#39;) + &quot; found&quot;);
+    },
+    displayTrialWebSite: function(b, e) {
+        var perspective = b.up(&#39;researchperspective&#39;);
+        var selectedTrial = this.getViewModel().get(&#39;selectedTrial&#39;);
+        perspective.add({
+            xtype: &#39;window&#39;,
+            width: 800,
+            height: 600,
+            title: selectedTrial.get(&#39;title&#39;),
+            maximizable: true,
+            constrain: true,
+            layout: &#39;fit&#39;,
+            items: [{
+                xtype: &#39;uxiframe&#39;,
+                src: selectedTrial.get(&#39;url&#39;)
+            }]
+        }).show();
+    },
+    resetGridState: function(win) {
+        var grid = win.down(&#39;grid&#39;);
+        Ext.Msg.confirm(
+            &#39;Reset Grid Layout&#39;,
+            &#39;Reset the grid layout?&#39;,
+            function(response) {
+                if (response == &#39;yes&#39;) {
+                    Ext.state.Manager.clear(grid.stateId);
+                    grid.reconfigure(
+                        grid.getStore(),
+                        grid.initialConfig.columns
+                    );
+                }
+            }
+        );
+    }
+
+});</pre>
+</body>
+</html>

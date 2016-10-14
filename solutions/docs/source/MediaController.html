@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.define(&#39;PatientChart.view.patientinfo.media.MediaController&#39;, {
+    extend: &#39;Ext.app.ViewController&#39;,
+    alias: &#39;controller.patientinfo-media-media&#39;,
+
+    onShowMediaAsset: function(view, record, item, index, e) {
+        var pv = view.up(&#39;tabpanel&#39;);
+        var eventName = &quot;show&quot; + record.get(&#39;filetype&#39;);
+        pv.fireEvent(
+            eventName,
+            pv,
+            view,
+            record.get(&#39;title&#39;),
+            record.get(&#39;fileurl&#39;),
+            record
+        );
+
+    },
+    onShowMenu: function(panel, tool, e) {
+
+        if (!this.gearMenu) {
+            this.gearMenu = Ext.create(&#39;Ext.menu.Menu&#39;, {
+                width: 100,
+                plain: true,
+                items: [{
+                    xtype: &#39;menuitem&#39;,
+                    text: &#39;Show All&#39;,
+                    iconCls: &#39;menuitemChecked&#39;
+                }, {
+                    xtype: &#39;menuitem&#39;,
+                    text: &#39;Show X-Rays&#39;,
+                    iconCls: &#39;menuitemNoCheck&#39;
+                }, {
+                    xtype: &#39;menuitem&#39;,
+                    text: &#39;Show Drugs&#39;,
+                    iconCls: &#39;menuitemNoCheck&#39;
+                }, {
+                    xtype: &#39;menuseparator&#39;
+                }, {
+                    xtype: &#39;menuitem&#39;,
+                    text: &#39;Sort by Date&#39;,
+                    iconCls: &#39;menuitemChecked&#39;
+                }, {
+                    xtype: &#39;menuitem&#39;,
+                    text: &#39;Sort by Title&#39;,
+                    iconCls: &#39;menuitemNoCheck&#39;
+                }],
+                listeners: {
+                    &#39;click&#39;: {
+                        fn: this.onMenuClick,
+                        scope: this
+                    }
+                }
+            });
+        }
+        this.gearMenu.showBy(tool);
+    },
+
+    onMenuClick: function(menu, item, e, eOpts) {
+
+        var dv = this.getView().down(&#39;dataview&#39;);
+        var s = dv.getStore();
+
+        var menuItems = menu.items.items;
+
+
+        if (item.text == &#39;Show All&#39; || item.text == &#39;Show X-Rays&#39; || item.text == &#39;Show Drugs&#39;) {
+            for (var i = 0; i &lt;= 2; i++) {
+                menuItems[i].setIconCls(&#39;menuitemNoCheck&#39;);
+            }
+        } else {
+            for (var i = 4; i &lt;= 5; i++) {
+                menuItems[i].setIconCls(&#39;menuitemNoCheck&#39;);
+            }
+        }
+
+        switch (item.text) {
+
+            case &#39;Show All&#39;:
+                item.setIconCls(&#39;menuitemChecked&#39;);
+                s.clearFilter();
+                break;
+
+            case &#39;Show X-Rays&#39;:
+                item.setIconCls(&#39;menuitemChecked&#39;);
+                s.clearFilter(true);
+                s.filter(&#39;type&#39;, &#39;xray&#39;);
+                break;
+
+            case &#39;Show Drugs&#39;:
+                item.setIconCls(&#39;menuitemChecked&#39;);
+                s.clearFilter(true);
+                s.filter(&#39;type&#39;, &#39;druginfo&#39;);
+                break;
+
+            case &#39;Sort by Date&#39;:
+                item.setIconCls(&#39;menuitemChecked&#39;);
+                s.sort(&#39;date&#39;, &#39;DESC&#39;);
+                break;
+
+            case &#39;Sort by Title&#39;:
+                item.setIconCls(&#39;menuitemChecked&#39;);
+                s.sort(&#39;title&#39;);
+                break;
+        }
+    }
+
+});</pre>
+</body>
+</html>

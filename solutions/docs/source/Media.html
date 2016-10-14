@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.define(&#39;PatientChart.view.patientinfo.media.Media&#39;, {
+    extend: &#39;Ext.panel.Panel&#39;,
+    alias: &#39;widget.patientmedia&#39;,
+    requires: [
+        &#39;PatientChart.view.patientinfo.media.MediaController&#39;,
+        &#39;Ext.ux.DataView.Animated&#39;
+    ],
+    
+    controller: &#39;patientinfo-media-media&#39;,
+    layout: &#39;fit&#39;,
+    items: [{
+        xtype: &#39;dataview&#39;,
+        bind: {
+            store: &#39;{PatientMediaAssets}&#39;
+        },
+        plugins: [
+            Ext.create(&#39;Ext.ux.DataView.Animated&#39;, {
+                duration: 550,
+                idProperty: &#39;id&#39;
+            })
+        ],
+        scrollable: true,
+        itemCls: &#39;patientMediaAsset&#39;,
+        itemTpl: [
+            &#39;&lt;img src=&quot;http://webapps.figleaf.com/webservices/media/{filepreviewimageurl}&quot;&gt;&#39;,
+            &#39;&lt;strong&gt;{title}&lt;br&gt;{[Ext.Date.format(values.date,&quot;m/d/Y @ H:i&quot;)]}&lt;/strong&gt;&#39;
+        ],
+        listeners: {
+            &#39;itemdblclick&#39;: &#39;onShowMediaAsset&#39;
+        }
+    }],
+    tools: [{
+        type: &#39;gear&#39;,
+        callback: &#39;onShowMenu&#39;
+    }]
+
+
+});</pre>
+</body>
+</html>

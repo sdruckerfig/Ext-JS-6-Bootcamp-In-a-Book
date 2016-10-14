@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.define(&#39;PatientChart.view.research.hospitals.HospitalsController&#39;, {
+    extend: &#39;Ext.app.ViewController&#39;,
+    alias: &#39;controller.research-hospitals-hospitals&#39;,
+    
+    onTreepanelCheckChange: function(node, checked, eOpts) {
+
+        var nodeValue = null,
+            nodeType = null,
+            nodeModifier = null,
+            serverFilters = [],
+            filters = {};
+
+        var nodes = Ext.Array.merge(
+            this.lookupReference(&#39;statefiltertree&#39;).getChecked(),
+            this.lookupReference(&#39;procedurefiltertree&#39;).getChecked()
+        );
+
+        for (var i = 0; i &lt; nodes.length; i++) {
+
+            nodeValue = nodes[i].get(&#39;id&#39;).split(&#39;:&#39;);
+            nodeType = nodeValue[0];
+            nodeModifier = nodeValue[1];
+
+            if (!filters[nodeType]) {
+                filters[nodeType] = [];
+            }
+
+            filters[nodeType].push(nodeModifier);
+        }
+
+        for (var i in filters) {
+            serverFilters.push({
+                property: i,
+                value: filters[i]
+            });
+        }
+
+        var store = this.getStore(&#39;HospitalStats&#39;);
+        store.clearFilter(true);
+
+        if (serverFilters.length == 0) {
+            store.removeAll();
+        } else {
+            store.filter(serverFilters);
+        }
+    }
+
+});</pre>
+</body>
+</html>

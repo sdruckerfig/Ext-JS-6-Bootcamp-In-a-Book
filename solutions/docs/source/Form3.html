@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.define(&#39;PatientChart.view.patientinfo.form.Form&#39;, {
+    extend: &#39;Ext.form.Panel&#39;,
+    alias: &#39;widget.patientform&#39;,
+    requires: [
+        &#39;PatientChart.view.patientinfo.form.FormModel&#39;,
+        &#39;PatientChart.view.patientinfo.form.FormController&#39;
+    ],
+    viewModel: {
+        type: &#39;patientinfo-form-form&#39;
+    },
+    controller: &#39;patientinfo-form-form&#39;,
+    autoScroll: true,
+    layout: &#39;auto&#39;,
+    bodyPadding: 5,
+    title: &#39;Patient Information&#39;,
+    modelValidation: true,
+    listeners: {
+        &#39;beforerender&#39;: &#39;onFormBeforeRender&#39;
+    },
+    tools: [{
+        xtype: &#39;tool&#39;,
+        type: &#39;save&#39;,
+        formBind: true,
+        callback: &#39;saveForm&#39;
+    }],
+    items: [{
+        xtype: &#39;container&#39;,
+        layout: {
+            type: &#39;hbox&#39;
+        },
+        items: [{
+            xtype: &#39;component&#39;,
+            border: 1,
+            bind: {
+                style: {
+                    border: &#39;1px solid black&#39;,
+                    &#39;border-radius&#39;: &#39;5px&#39;,
+                    &#39;background-image&#39;: &#39;url({profileImage})&#39;,
+                    &#39;background-repeat&#39;: &#39;no-repeat&#39;,
+                    &#39;background-position&#39;: &#39;center&#39;
+                }
+            },
+            width: 200,
+            height: 200
+        }, {
+            xtype: &#39;container&#39;,
+            flex: 1,
+            margin: &#39;0 5 0 5&#39;,
+            defaults: {
+                anchor: &#39;100%&#39;
+            },
+            layout: &#39;anchor&#39;,
+            items: [{
+                    xtype: &#39;hiddenfield&#39;,
+                    name: &#39;patientid&#39;,
+                    bind: &#39;{patient.id}&#39;
+                }, {
+                    xtype: &#39;fieldcontainer&#39;,
+                    fieldLabel: &#39;Name&#39;,
+                    layout: &#39;hbox&#39;,
+                    defaults: {
+                        flex: 1
+                    },
+                    items: [{
+                        xtype: &#39;textfield&#39;,
+                        fieldLabel: &#39;First Name&#39;,
+                        hideLabel: true,
+                        name: &#39;firstname&#39;,
+                        allowBlank: false,
+                        bind: &#39;{patient.firstname}&#39;,
+                        emptyText: &#39;First Name&#39;
+
+                    }, {
+                        xtype: &#39;textfield&#39;,
+                        fieldLabel: &#39;Last Name&#39;,
+                        hideLabel: true,
+                        name: &#39;lastname&#39;,
+                        bind: &#39;{patient.lastname}&#39;,
+                        allowBlank: false,
+                        emptyText: &#39;Last Name&#39;
+                    }]
+                }, {
+                    xtype: &#39;textfield&#39;,
+                    fieldLabel: &#39;Address&#39;,
+                    bind: &#39;{patient.address}&#39;,
+                    name: &#39;address&#39;
+                }, {
+                    xtype: &#39;fieldcontainer&#39;,
+                    layout: &#39;hbox&#39;,
+                    fieldLabel: &#39;City,State,Z&#39;,
+                    items: [{
+                        xtype: &#39;textfield&#39;,
+                        flex: 1,
+                        margin: &#39;0 5 0 0&#39;,
+                        fieldLabel: &#39;&#39;,
+                        name: &#39;city&#39;,
+                        bind: &#39;{patient.city}&#39;
+                    }, {
+                        xtype: &#39;combobox&#39;,
+                        margin: &#39;0 5 0 0&#39;,
+                        width: 80,
+                        hideLabel: true,
+                        name: &#39;state&#39;,
+                        displayField: &#39;abbreviation&#39;,
+                        forceSelection: true,
+                        queryMode: &#39;local&#39;,
+                        bind: {
+                            store: &#39;{States}&#39;,
+                            value: &#39;{patient.state}&#39;
+                        },
+                        valueField: &#39;abbreviation&#39;
+                    }, {
+                        xtype: &#39;textfield&#39;,
+                        width: 100,
+                        hideLabel: true,
+                        name: &#39;zipcode&#39;,
+                        bind: &#39;{patient.zipcode}&#39;
+                    }]
+                }, {
+                    xtype: &#39;textfield&#39;,
+                    fieldLabel: &#39;Email&#39;,
+                    name: &#39;email&#39;,
+                    vtype: &#39;email&#39;,
+                    bind: &#39;{patient.email}&#39;
+                }, {
+                    xtype: &#39;container&#39;,
+                    margin: &#39;0 0 0 0&#39;,
+                    layout: &#39;hbox&#39;,
+                    items: [{
+                        xtype: &#39;datefield&#39;,
+                        fieldLabel: &#39;Date of Birth&#39;,
+                        name: &#39;dob&#39;,
+                        bind: &#39;{patient.dob}&#39;,
+                        flex: 1,
+                        margin: &#39;0 5 0 0&#39;
+                    }, {
+                        xtype: &#39;radiogroup&#39;,
+                        flex: 1,
+                        fieldLabel: &#39;Gender&#39;,
+                        allowBlank: false,
+                        layout: &#39;hbox&#39;,
+                        bind: {
+                            value: &#39;{gender}&#39;
+                        },
+                        items: [{
+                            xtype: &#39;radiofield&#39;,
+                            name: &#39;gender&#39;,
+                            boxLabel: &#39;Male&#39;,
+                            inputValue: &#39;Male&#39;,
+                            margin: &#39;0 10 0 0&#39;
+                        }, {
+                            xtype: &#39;radiofield&#39;,
+                            name: &#39;gender&#39;,
+                            boxLabel: &#39;Female&#39;,
+                            inputValue: &#39;Female&#39;
+                        }]
+                    }]
+                }
+
+            ]
+        }]
+    }, {
+        xtype: &#39;container&#39;,
+        margin: &#39;10 5 0 0&#39;,
+        layout: &#39;anchor&#39;,
+        defaults: {
+            anchor: &#39;100%&#39;
+        },
+        items: [{
+            xtype: &#39;filefield&#39;,
+            fieldLabel: &#39;Upload Image&#39;,
+            name: &#39;profilePhoto&#39;
+        }, {
+            xtype: &#39;tagfield&#39;,
+            fieldLabel: &#39;Allergies&#39;,
+            name: &#39;allergies&#39;,
+            store: &#39;Allergies&#39;,
+            bind: {
+                value: &#39;{patient.allergies}&#39;
+            }
+        }, {
+            xtype: &#39;fieldset&#39;,
+            anchor: &#39;100% -250&#39;,
+            title: &#39;Pre-Existing Conditions&#39;,
+            items: [{
+                xtype: &#39;checkboxgroup&#39;,
+                bind: {
+                    value: &#39;{patient.preexistingconditions}&#39;
+                },
+                reference: &#39;preexistingconditions&#39;,
+                hideLabel: true,
+                items: [{
+                    xtype: &#39;checkboxfield&#39;,
+                    fieldLabel: &#39;Label&#39;,
+                    boxLabel: &#39;Box Label&#39;
+                }]
+            }]
+        }, {
+            xtype: &#39;tinymce&#39;,
+            height: 300,
+            fieldLabel: &#39;Notes&#39;,
+            labelAlign: &#39;top&#39;,
+            name: &#39;notes&#39;,
+            bind: &#39;{patient.notes}&#39;
+        }]
+    }]
+});</pre>
+</body>
+</html>

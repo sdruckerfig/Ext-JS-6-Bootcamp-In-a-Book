@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.define(&#39;PatientChart.view.patientinfo.form.FormModel&#39;, {
+    extend: &#39;Ext.app.ViewModel&#39;,
+    alias: &#39;viewmodel.patientinfo-form-form&#39;,
+
+    stores: {
+        States: {
+            fields: [{
+                name: &#39;name&#39;
+            }, {
+                name: &#39;abbreviation&#39;
+            }],
+            autoLoad: true,
+            proxy: {
+                type: &#39;ajax&#39;,
+                url: &#39;resources/sampledata/states.json&#39;
+            }
+        }
+    },
+
+    formulas: {
+        profileImage: {
+            bind: &#39;{patient}&#39;,
+            get: function(rec) {
+                if (rec) {
+                    return &#39;http://webapps.figleaf.com/webservices/images/&#39; + rec.get(&#39;photourl&#39;);
+                }
+            }
+        },
+        gender: {
+            bind: &#39;{patient}&#39;,
+            get: function(rec) {
+                if (rec) {
+                    console.log({
+                        gender: rec.get(&#39;gender&#39;)
+                    });
+                    return {
+                        gender: rec.get(&#39;gender&#39;)
+                    }
+                }
+            },
+            set: function(obj) {
+                this.get(&#39;patient&#39;).set(&#39;gender&#39;, obj.gender);
+            }
+        }
+    }
+});</pre>
+</body>
+</html>

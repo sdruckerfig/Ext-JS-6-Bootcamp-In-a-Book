@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.define(&#39;PatientChart.view.patientinfo.procedures.ProceduresCombo&#39;, {
+    extend: &#39;Ext.form.field.ComboBox&#39;,
+    alias: &#39;widget.procedurescombo&#39;,
+
+    store: &#39;BillingCodes&#39;,
+    valueField: &#39;id&#39;,
+    queryMode: &#39;remote&#39;,
+    forceSelection: true,
+    minChars: 2,
+    tpl: Ext.create(&#39;Ext.XTemplate&#39;,
+        &#39;&lt;tpl for=&quot;.&quot;&gt;&#39;,
+        &#39;&lt;div class=&quot;x-boundlist-item&quot;&gt;{code} - {text}&lt;/div&gt;&#39;,
+        &#39;&lt;/tpl&gt;&#39;
+    ),
+    displayTpl: Ext.create(&#39;Ext.XTemplate&#39;,
+        &#39;&lt;tpl for=&quot;.&quot;&gt;&#39;,
+        &#39;{code} - {text}&#39;,
+        &#39;&lt;/tpl&gt;&#39;
+    ),
+    listeners: {
+        select: &#39;onBillingCodeSelect&#39;
+    }
+});</pre>
+</body>
+</html>

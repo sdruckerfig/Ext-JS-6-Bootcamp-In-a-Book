@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.define(&#39;PatientChart.model.PatientDailyStat&#39;, {
+    extend: &#39;Ext.data.Model&#39;,
+
+    fields: [{
+        name: &#39;id&#39;,
+        type: &#39;int&#39;
+    }, {
+        name: &#39;patientId&#39;,
+        type: &#39;int&#39;
+    }, {
+        name: &#39;date&#39;,
+        type: &#39;date&#39;,
+        dateFormat: &#39;m/d/Y&#39;
+    }, {
+        name: &#39;height&#39;,
+        type: &#39;float&#39;
+    }, {
+        name: &#39;weight&#39;,
+        type: &#39;float&#39;
+    }, {
+        name: &#39;systolic&#39;,
+        type: &#39;int&#39;
+    }, {
+        name: &#39;diastolic&#39;,
+        type: &#39;int&#39;
+    }, {
+        name: &#39;exerciseminutes&#39;,
+        type: &#39;int&#39;
+    }, {
+        name: &#39;bmi&#39;,
+        type: &#39;auto&#39;,
+        calculate: function(data) {
+            var minweight = Math.round(1.8 * data.height);
+            var maxweight = Math.round(2.285 * data.height);
+            var overweight = Math.round(2.85 * data.height);
+            var obese = Math.round(3.71 * data.height);
+            return [maxweight, data.weight, obese];
+        }
+    }, {
+        name: &#39;month&#39;,
+        calculate: function(data) {
+            return Ext.Date.format(data.date, &#39;Y-m&#39;);
+        }
+    }, {
+        name: &#39;datelabel&#39;,
+        calculate: function(data) {
+            return Ext.Date.format(data.date, &#39;m/d/Y&#39;);
+        }
+    }],
+    proxy: {
+        type: &#39;rest&#39;,
+        url: &#39;http://webapps.figleaf.com/rest/prototypes/patientstat&#39;,
+        format: &#39;json&#39;,
+        reader: {
+            type: &#39;json&#39;,
+            rootProperty: &#39;records&#39;
+        }
+    }
+});</pre>
+</body>
+</html>

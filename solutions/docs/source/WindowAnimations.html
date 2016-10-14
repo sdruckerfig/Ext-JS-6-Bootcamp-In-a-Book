@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='Ext-ux-mixins-WindowAnimations'>/**
+</span>* A mixin that adds an animation effect to 
+* a closing Ext.window.Window
+*/
+
+Ext.define(&#39;Ext.ux.mixins.WindowAnimations&#39;, {
+    extend: &#39;Ext.Mixin&#39;,
+    
+<span id='Ext-ux-mixins-WindowAnimations-property-closeAnimation'>    /**
+</span>    * @property {String} closeAnimation (required)
+    * Either &#39;fade&#39; or &#39;switchoff&#39;
+    */
+    
+    closeAnimation: &#39;fade&#39;,
+    
+<span id='Ext-ux-mixins-WindowAnimations-property-mixinConfig'>    mixinConfig: {
+</span>        before: {
+            close: &#39;onBeforeClose&#39;
+        }
+    },
+    
+<span id='Ext-ux-mixins-WindowAnimations-method-onBeforeClose'>    onBeforeClose: function() {
+</span>        if (this.closeAnimation == &#39;fade&#39;) {
+            this.el.animate({
+                opacity: 0,
+                callback: function() {
+                    this.fireEvent(&#39;close&#39;, this);
+                    this[this.closeAction]();
+                },
+                scope: this
+            });
+        } else {
+            this.el.switchOff({
+                callback: function() {
+                    this.fireEvent(&#39;close&#39;, this);
+                    this[this.closeAction]();
+                },
+                scope: this
+            });
+        }
+        return false; // prevent default action
+    }
+});</pre>
+</body>
+</html>

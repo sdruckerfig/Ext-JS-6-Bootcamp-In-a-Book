@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='PatientChart-AppDefaults'>/**
+</span> *
+ * Application defaults
+ * Singleton that contains base webservice url and outputs
+ * version number
+ */
+
+Ext.define(&#39;PatientChart.AppDefaults&#39;, {
+    singleton: true,
+    requires: [&#39;Ext.window.MessageBox&#39;],
+    config: {
+<span id='PatientChart-AppDefaults-cfg-webserviceUrl'>        /**
+</span>         * The base REST url to access data services
+         */
+        webserviceUrl: &#39;http://webapps.figleaf.com/rest/prototypes/&#39;,
+<span id='PatientChart-AppDefaults-cfg-imageUrl'>        imageUrl: &#39;http://webapps.figleaf.com/webservices/media/&#39;
+</span>    },
+<span id='PatientChart-AppDefaults-method-constructor'>    constructor: function(config) {
+</span>        this.initConfig(config);
+    },
+<span id='PatientChart-AppDefaults-method-version'>    version: function() {
+</span>        Ext.Msg.alert(&quot;Doctor Ext&quot;, &quot;Version 1.0&quot;);
+    }
+});</pre>
+</body>
+</html>

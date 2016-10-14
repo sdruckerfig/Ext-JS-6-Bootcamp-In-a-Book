@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.define(&#39;PatientChart.model.PatientMediaAsset&#39;, {
+    extend: &#39;Ext.data.Model&#39;,
+
+    requires: [
+        &#39;Ext.data.field.Field&#39;
+    ],
+
+    fields: [{
+        name: &#39;id&#39;,
+        type: &#39;int&#39;
+    }, {
+        name: &#39;patientId&#39;,
+        reference: &#39;PatientChart.model.Patient&#39;,
+        type: &#39;int&#39;
+    }, {
+        name: &#39;date&#39;,
+        type: &#39;date&#39;,
+        dateFormat: &#39;m/d/Y&#39;
+    }, {
+        name: &#39;title&#39;
+    }, {
+        name: &#39;fileUrl&#39;
+    }, {
+        name: &#39;filetype&#39;
+    }, {
+        name: &#39;filepreviewimageurl&#39;
+    }, {
+        name: &#39;description&#39;
+    }, {
+        name: &#39;type&#39;
+    }, {
+        name: &#39;updateuser&#39;
+    }, {
+        type: &#39;date&#39;,
+        name: &#39;updatedate&#39;,
+        dateFormat: &#39;F, d Y H:i:s&#39;
+    }, {
+        name: &#39;datelabel&#39;,
+        calculate: function(data) {
+            return Ext.Date.format(data.date, &#39;m/d/Y&#39;);
+        }
+    }],
+    proxy: {
+        type: &#39;rest&#39;,
+        url: &#39;http://webapps.figleaf.com/rest/prototypes/patientmedia&#39;,
+        format: &#39;json&#39;,
+        reader: {
+            type: &#39;json&#39;,
+            rootProperty: &#39;records&#39;
+        }
+    }
+});</pre>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.define(&#39;PatientChart.view.patientinfo.graphs.HeightWeight&#39;, {
+	extend: &#39;Ext.chart.CartesianChart&#39;,
+	alias: &#39;widget.patientheightweight&#39;,
+	header: false,
+	requires: [
+		&#39;Ext.chart.axis.Category&#39;,
+		&#39;Ext.chart.axis.Numeric&#39;,
+		&#39;Ext.chart.series.Line&#39;,
+		&#39;Ext.chart.interactions.Crosshair&#39;,
+		&#39;Ext.chart.interactions.ItemHighlight&#39;
+	],
+	bind: {
+		store: &#39;{PatientDailyStats}&#39;
+	},
+	interactions: [{
+			type: &#39;itemhighlight&#39;
+		}, {
+			type: &#39;crosshair&#39;,
+			axes: {
+				left: {
+					label: {
+						fillStyle: &#39;white&#39;
+					},
+					rect: {
+						fillStyle: &#39;brown&#39;,
+						radius: 6
+					}
+				},
+				bottom: {
+					label: {
+						fontSize: &#39;14px&#39;,
+						fontWeight: &#39;bold&#39;
+					}
+				}
+			},
+			lines: {
+				horizontal: {
+					strokeStyle: &#39;brown&#39;,
+					lineWidth: 2,
+					lineDash: [20, 2, 2, 2, 2, 2, 2, 2]
+				}
+			}
+		}
+	],
+	axes: [{
+		type: &#39;category&#39;,
+		fields: [
+			&#39;datelabel&#39;
+		],
+		title: &#39;Date&#39;,
+		position: &#39;bottom&#39;,
+		label: {
+			rotate: {
+				degrees: 45
+			}
+		}
+	}, {
+		type: &#39;numeric&#39;,
+		fields: [
+			&#39;height&#39;
+		],
+		position: &#39;left&#39;,
+		title: &#39;Height&#39;
+	}, {
+		type: &#39;numeric&#39;,
+		fields: [
+			&#39;weight&#39;
+		],
+		position: &#39;right&#39;,
+		title: &#39;Weight&#39;,
+		grid: {
+			odd: {
+				opacity: 1,
+				fill: &#39;#ddd&#39;,
+				stroke: &#39;#bbb&#39;,
+				lineWidth: 1
+			}
+		}
+	}],
+	series: [{
+		type: &#39;line&#39;,
+		xField: &#39;datelabel&#39;,
+		yField: [&#39;height&#39;],
+		smooth: true,
+		title: &#39;Height&#39;
+	}, {
+		type: &#39;line&#39;,
+		xField: &#39;datelabel&#39;,
+		yField: [&#39;weight&#39;],
+		smooth: true,
+		title: &#39;Weight&#39;,
+		marker: {
+			type: &#39;circle&#39;,
+			radius: 4
+		},
+
+		highlight: {
+			size: 7,
+			radius: 7
+		}
+	}],
+	legend: {
+		docked: &#39;right&#39;
+	}
+
+});</pre>
+</body>
+</html>

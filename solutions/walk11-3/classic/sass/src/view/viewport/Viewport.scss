@@ -1,0 +1,22 @@
+ @font-face {
+  font-family: 'Electrolize';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Electrolize'), local('Electrolize-Regular'), url(http://themes.googleusercontent.com/static/fonts/electrolize/v2/DDy9sgU2U7S4xAwH5thnJ4bN6UDyHWBl620a-IRfuBk.woff) format('woff');
+}
+
+
+.appBackground div div {
+    background-image: url('../../resources/images/DrEXTWatermark.png'), url('../../resources/images//background1.png') !important;
+    background-repeat: no-repeat, no-repeat !important;
+    background-position: bottom right, center !important;
+    background-size: 25%, cover !important;
+}
+
+.menuitemChecked {
+    background-image: url(../../resources/images/check.png);
+}
+
+.userAccounts {
+    background-image: url(../../resources/images/businesspeople2.png);
+}

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.define(&#39;PatientChart.view.patientinfo.form.FormController&#39;, {
+	extend: &#39;Ext.app.ViewController&#39;,
+	alias: &#39;controller.patientinfo-form-form&#39;,
+
+	onFormBeforeRender: function(component, eOpts) {
+		var pc = this.lookupReference(&#39;preexistingconditions&#39;);
+		var s = Ext.getStore(&#39;PreExistingConditions&#39;);
+		if (s.getCount() == 0) {
+			Ext.defer(this.onFormBeforeRender, 100, this, [component, eOpts]);
+		} else {
+			pc.removeAll();
+			var cboxes = [];
+			for (var i = 0; i &lt; s.getCount(); i++) {
+				cboxes.push({
+					xtype: &#39;checkbox&#39;,
+					name: &#39;preexistingcondition&#39;,
+					boxLabel: s.getAt(i).get(&#39;text&#39;),
+					inputValue: s.getAt(i).get(&#39;id&#39;)
+				});
+			}
+			pc.add(cboxes);
+		}
+	},
+
+
+	postPhoto: function(form) {
+		form.submit({
+			url: &#39;http://webapps.figleaf.com/webservices/savepatient.cfm&#39;,
+			success: function(form, action) {
+				Ext.Msg.alert(&quot;Success!&quot;);
+			},
+			failure: function(form, action) {
+				// will always fail if x-domain
+				/*
+				switch (action.failureType) {
+					case Ext.form.action.Action.CLIENT_INVALID:
+						Ext.Msg.alert(&#39;Failure&#39;, &#39;Form fields may not be submitted with invalid values&#39;);
+						break;
+					case Ext.form.action.Action.CONNECT_FAILURE:
+						Ext.Msg.alert(&#39;Failure&#39;, &#39;Ajax communication failed&#39;);
+						break;
+					case Ext.form.action.Action.SERVER_INVALID:
+						Ext.Msg.alert(&#39;Failure&#39;, action.result.msg);
+				}
+				*/
+
+			}
+		});
+	},
+
+	saveForm: function(form, tool) {
+		var record = this.getViewModel().get(&#39;patient&#39;);
+
+		// save metatdata through proxy
+		record.save({
+			success: function(rec, operation) {
+				Ext.toast(&#39;Record Updated&#39;, &#39;Server Transaction&#39;, &#39;t&#39;);
+				if (operation.action == &#39;create&#39;) {
+					var pk = Ext.decode(operation.getResponse().responseText).id;
+					record.set(&#39;id&#39;, pk);
+				}
+				this.postPhoto(form);
+			},
+			failure: function(rec, operation) {
+				Ext.Msg.alert(&quot;Failure&quot;, &quot;Operation failed. Check your browser console&quot;);
+				console.log(arguments);
+			},
+			scope: this
+		});
+
+	}
+
+});</pre>
+</body>
+</html>

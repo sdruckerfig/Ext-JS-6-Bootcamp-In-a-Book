@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.define(&#39;PatientChart.model.user.Department&#39;, {
+    extend: &#39;Ext.data.TreeModel&#39;,
+    entityName: &#39;department&#39;,
+    fields: [{
+        name: &#39;icon&#39;,
+        defaultValue: &#39;resources/images/businesspeople.png&#39;
+    }, {
+        name: &#39;text&#39;,
+        defaultValue: &#39;New Department&#39;
+    }, {
+        name: &#39;leaf&#39;,
+        defaultValue: false
+    }, {
+        name: &#39;allowDrag&#39;,
+        defaultValue: false
+    }]
+});</pre>
+</body>
+</html>

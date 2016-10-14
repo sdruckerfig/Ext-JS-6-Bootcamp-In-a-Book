@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.define(&#39;PatientChart.view.research.hospitalinfo.HospitalInfo&#39;, {
+    extend: &#39;Ext.window.Window&#39;,
+    alias: &#39;widget.hospitalinfotreegrid&#39;,
+    requires: [
+        &#39;PatientChart.view.research.hospitalinfo.HospitalInfoController&#39;,
+        &#39;PatientChart.view.research.hospitalinfo.HospitalInfoModel&#39;
+    ],
+
+    controller: &#39;research-hospitalinfo-hospitalinfo&#39;,
+    viewModel: {
+        type: &#39;research-hospitalinfo-hospitalinfo&#39;
+    },
+
+    constrain: true,
+    autoShow: true,
+    maximizable: true,
+    height: 475,
+    width: 900,
+    title: &#39;Hospital Treatment Costs&#39;,
+    layout: &#39;fit&#39;,
+
+    items: [{
+        xtype: &#39;treepanel&#39;,
+        rootVisible: false,
+        useArrows: true,
+        showHeader: false,
+        bind: {
+            store: &#39;{HospitalInfo}&#39;
+        },
+        columns: [{
+            xtype: &#39;treecolumn&#39;,
+            dataIndex: &#39;text&#39;,
+            flex: 1,
+            text: &#39;Hospital&#39;
+        }, {
+            xtype: &#39;numbercolumn&#39;,
+            dataIndex: &#39;treatmentcount&#39;,
+            text: &#39;# Treatments&#39;,
+            format: &#39;0&#39;,
+            align: &#39;right&#39;,
+            width: 140
+        }, {
+            dataIndex: &#39;totaldischarges&#39;,
+            xtype: &#39;numbercolumn&#39;,
+            text: &#39;Discharges&#39;,
+            format: &#39;0,0&#39;,
+            align: &#39;right&#39;,
+            width: 120
+        }, {
+            dataIndex: &#39;averagetotalpayments&#39;,
+            xtype: &#39;numbercolumn&#39;,
+            text: &#39;Avg Payments&#39;,
+            format: &#39;0,0&#39;,
+            align: &#39;right&#39;,
+            width: 130
+        }, {
+            dataIndex: &#39;averagemedicarepayments&#39;,
+            xtype: &#39;numbercolumn&#39;,
+            text: &#39;Avg Medicare&lt;br/&gt;Payments&#39;,
+            format: &#39;0,0&#39;,
+            align: &#39;right&#39;,
+            width: 140
+        }, {
+            dataIndex: &#39;averagemedicarepayments&#39;,
+            xtype: &#39;numbercolumn&#39;,
+            text: &#39;Avg Covered&lt;br/&gt;Charges&#39;,
+            format: &#39;0,0&#39;,
+            align: &#39;right&#39;,
+             width: 140
+        }],
+        listeners: {
+            itemdblclick: &#39;showDetails&#39;
+        }
+    }]
+});</pre>
+</body>
+</html>

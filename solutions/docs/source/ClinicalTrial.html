@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.define(&#39;PatientChart.model.ClinicalTrial&#39;, {
+    extend: &#39;Ext.data.Model&#39;,
+
+    requires: [
+        &#39;Ext.data.field.Number&#39;,
+        &#39;Ext.data.field.Integer&#39;,
+        &#39;Ext.data.field.Date&#39;,
+        &#39;Ext.data.proxy.Rest&#39;,
+        &#39;Ext.data.reader.Json&#39;
+    ],
+
+    idProperty: &#39;nct_id&#39;,
+
+    fields: [
+        {
+            name: &#39;condition_summary&#39;
+        },
+        {
+            type: &#39;float&#39;,
+            name: &#39;score&#39;
+        },
+        {
+            name: &#39;nct_id&#39;
+        },
+        {
+            type: &#39;int&#39;,
+            name: &#39;order&#39;
+        },
+        {
+            type: &#39;date&#39;,
+            name: &#39;last_changed&#39;,
+            dateFormat: &#39;F j, Y&#39;
+        },
+        {
+            name: &#39;intervention_summary&#39;
+        },
+        {
+            name: &#39;status&#39;
+        },
+        {
+            name: &#39;url&#39;
+        },
+        {
+            name: &#39;title&#39;
+        }
+    ],
+
+    proxy: {
+        type: &#39;rest&#39;,
+        url: &#39;http://webapps.figleaf.com/rest/prototypes/clinicaltrial&#39;,
+        format: &#39;json&#39;,
+        withCredentials: true,
+        reader: {
+            type: &#39;json&#39;,
+            rootProperty: &#39;ROWS&#39;,
+            successProperty: &#39;SUCCESS&#39;,
+            totalProperty: &#39;RESULTS&#39;
+        }
+    }
+});</pre>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.define(&#39;PatientChart.view.patientinfo.PatientInfo&#39;, {
+    extend: &#39;Ext.panel.Panel&#39;,
+
+    alias: &#39;widget.patientinfoperspective&#39;,
+
+    requires: [
+        &#39;PatientChart.view.patientinfo.PatientInfoController&#39;,
+        &#39;PatientChart.view.patientinfo.PatientInfoModel&#39;,
+        &#39;PatientChart.view.patientinfo.anatomy.Anatomy&#39;,
+        &#39;PatientChart.view.patientinfo.form.Form&#39;,
+        &#39;PatientChart.view.patientinfo.graphs.Graphs&#39;,
+        &#39;PatientChart.view.patientinfo.media.Media&#39;,
+        &#39;PatientChart.view.patientinfo.procedures.Procedures&#39;
+    ],
+
+    controller: &#39;patientinfo-patientinfo&#39;,
+    viewModel: {
+        type: &#39;patientinfo-patientinfo&#39;
+    },
+
+    layout: &#39;border&#39;,
+    header: false,
+    title: &#39;Patient Information&#39;,
+    items: [{
+        xtype: &#39;patientanatomy&#39;,
+        region: &#39;east&#39;,
+        width: 235,
+        title: &#39;Anatomy&#39;,
+        split: true,
+        collapsible: true
+    }, {
+        xtype: &#39;tabpanel&#39;,
+        region: &#39;center&#39;,
+        removePanelHeader: false,
+        tabPosition: &#39;bottom&#39;,
+        deferredRender: false,
+        items: [{
+            xtype: &#39;patientform&#39;,
+            reference: &#39;patientform&#39;,
+            title: &#39;Patient Info&#39;,
+            tools: [{
+                xtype: &#39;tool&#39;,
+                type: &#39;save&#39;
+            }]
+        }, {
+            xtype: &#39;patientprocedures&#39;,
+            title: &#39;Procedures&#39;,
+            reference: &#39;procedures&#39;
+        }, {
+            xtype: &#39;patientmedia&#39;,
+            title: &#39;Media&#39;,
+            reference: &#39;media&#39;
+        }, {
+            xtype: &#39;patientgraphs&#39;,
+            title: &#39;Statistics&#39;,
+            reference: &#39;graphs&#39;
+        }],
+        listeners: {
+            &#39;tabchange&#39; : &#39;onPatientInfoTabChange&#39;
+        }
+    }]
+
+
+});</pre>
+</body>
+</html>

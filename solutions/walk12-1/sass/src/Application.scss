@@ -1,0 +1,6 @@
+@include extjs-window-ui(
+     $ui: 'credits',
+     $ui-header-font-family: 'Arial',
+     $ui-header-font-size: 22px,
+     $ui-body-background-color: $base-color
+);

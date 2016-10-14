@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.define(&#39;PatientChart.view.admin.billingcodes.BillingCodes&#39;, {
+	extend: &#39;Ext.window.Window&#39;,
+	alias: &#39;widget.billingcodes&#39;,
+
+	requires: [
+		&#39;PatientChart.view.admin.billingcodes.BillingCodesModel&#39;,
+		&#39;PatientChart.view.admin.billingcodes.BillingCodesController&#39;,
+		&#39;Ext.panel.Tool&#39;,
+		&#39;Ext.grid.Panel&#39;,
+		&#39;Ext.grid.View&#39;,
+		&#39;Ext.grid.plugin.RowEditing&#39;,
+		&#39;Ext.selection.RowModel&#39;,
+		&#39;Ext.grid.column.Number&#39;,
+		&#39;Ext.form.field.Number&#39;,
+		&#39;Ext.toolbar.Toolbar&#39;,
+		&#39;Ext.toolbar.TextItem&#39;
+	],
+
+	controller: &quot;admin-billingcodes-billingcodes&quot;,
+	viewModel: {
+		type: &quot;admin-billingcodes-billingcodes&quot;
+	},
+	constrain: true,
+	height: 250,
+	width: 603,
+	layout: &#39;fit&#39;,
+	title: &#39;Edit Billing/Procedure Codes&#39;,
+
+	tools: [{
+		xtype: &#39;tool&#39;,
+		type: &#39;plus&#39;,
+		listeners: {
+			click: &#39;onAddRecord&#39;
+		}
+	}, {
+		xtype: &#39;tool&#39;,
+		type: &#39;minus&#39;,
+		bind: {
+			disabled: &#39;{!selectedRecord}&#39;
+		},
+		listeners: {
+			click: &#39;onDeleteRecords&#39;
+		}
+	}, {
+		xtype: &#39;tool&#39;,
+		type: &#39;refresh&#39;,
+		listeners: {
+			click: &#39;onRefresh&#39;
+		}
+	}],
+	items: [{
+		xtype: &#39;gridpanel&#39;,
+		reference: &#39;grid&#39;,
+		header: false,
+		title: &#39;My Grid Panel&#39;,
+		store: &#39;BillingCodes&#39;,
+		bind: {
+			selection: &#39;{selectedRecord}&#39;
+		},
+		columns: [{
+			xtype: &#39;gridcolumn&#39;,
+			dataIndex: &#39;code&#39;,
+			text: &#39;Code&#39;,
+			editor: {
+				xtype: &#39;textfield&#39;,
+				allowBlank: false,
+				emptyText: &#39;New Code&#39;
+			}
+		}, {
+			xtype: &#39;gridcolumn&#39;,
+			dataIndex: &#39;text&#39;,
+			text: &#39;Label&#39;,
+			flex: 1,
+			editor: {
+				xtype: &#39;textfield&#39;,
+				allowBlank: false,
+				allowOnlyWhitespace: false,
+				emptyText: &#39;New Label&#39;
+			}
+		}, {
+			xtype: &#39;gridcolumn&#39;,
+			dataIndex: &#39;description&#39;,
+			text: &#39;Description&#39;,
+			flex: 1,
+			editor: {
+				xtype: &#39;textfield&#39;,
+				emptyText: &#39;Description&#39;
+			}
+		}, {
+			xtype: &#39;numbercolumn&#39;,
+			dataIndex: &#39;fee&#39;,
+			text: &#39;Fee&#39;,
+			editor: {
+				xtype: &#39;numberfield&#39;,
+				allowExponential: false,
+				minValue: 0
+			}
+		}],
+		plugins: [{
+			ptype: &#39;rowediting&#39;,
+			listeners: {
+				edit: &#39;onRowEditingEdit&#39;,
+				canceledit: &#39;onRowEditingCancelEdit&#39;
+			}
+		}],
+		selModel: {
+			selType: &#39;rowmodel&#39;,
+			allowDeselect: true,
+			mode: &#39;MULTI&#39;
+		}
+	}],
+	dockedItems: [{
+		xtype: &#39;toolbar&#39;,
+		dock: &#39;bottom&#39;,
+		height: 30,
+		items: [{
+			xtype: &#39;tbtext&#39;,
+			flex: 1,
+			reference: &#39;lastupdated&#39;,
+			bind: {
+				text: &#39;Updated: {grid.selection.updatedate:date(\&#39;m/d/Y H:i a\&#39;)} by {grid.selection.updateuser}&#39;
+			}
+		}]
+	}]
+
+});</pre>
+</body>
+</html>

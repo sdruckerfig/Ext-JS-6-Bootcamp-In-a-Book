@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.define(&#39;PatientChart.view.patientinfo.PatientInfoController&#39;, {
+    extend: &#39;Ext.app.ViewController&#39;,
+    alias: &#39;controller.patientinfo-patientinfo&#39;,
+
+    requires: [
+        &#39;Ext.ux.imageviewer.ImageViewer&#39;,
+        &#39;Ext.ux.panel.PDF&#39;
+    ],
+
+    config: {
+        control: {
+            &#39;tabpanel&#39;: {
+                &#39;showpdf&#39;: &#39;onShowPdf&#39;,
+                &#39;showjpg&#39;: &#39;onShowImage&#39;
+            }
+        }
+    },
+
+    onPatientInfoTabChange: function(tabpanel, newCard,
+        oldCard, eOpts) {
+        var hash = location.hash.substring(1,
+            location.hash.length);
+        var hashArr = hash.split(&#39;/&#39;);
+        var newHash = &#39;&#39;.concat(
+            hashArr[0] + &quot;/&quot;,
+            hashArr[1] + &quot;/&quot;,
+            newCard.reference
+        );
+        this.redirectTo(newHash);
+    },
+    loadPatientRecord: function(patientId) {
+
+        // load record
+        PatientChart.model.Patient.load(patientId, {
+            scope: this,
+            failure: function(record, operation) {
+                //do something if the load failed
+                Ext.Msg.alert(&quot;Transaction Failed&quot;, &quot;Check the Browser Console Log&quot;);
+                console.log(arguments);
+            },
+            success: function(record, operation) {
+                //do something if the load succeeded
+                this.getViewModel().set(&#39;patient&#39;, record);
+            }
+        });
+    },
+    onPatientDailyStatsLoad: function(store) {
+        this.getViewModel().set(&#39;selectedStat&#39;, store.last());
+    },
+    onShowPdf: function(tabpanelview, dv, title, url, record) {
+        tabpanelview.add({
+            xtype: &#39;pdfpanel&#39;,
+            title: title,
+            closable: true,
+            pageScale: 1,
+            src: &#39;http://webapps.figleaf.com/webservices/media/&#39; + url
+        });
+    },
+    onShowImage: function(tabpanelview, dv, title, url, record) {
+        tabpanelview.add({
+            xtype: &#39;extimageviewer&#39;,
+            title: title,
+            closable: true,
+            src: &#39;http://webapps.figleaf.com/webservices/media/&#39; + url,
+            imageTitle: record.get(&#39;title&#39;) + &#39; on &#39; +
+                Ext.Date.format(record.get(&#39;date&#39;), &quot;m/d/Y @ H:i&quot;)
+        });
+    }
+
+});</pre>
+</body>
+</html>

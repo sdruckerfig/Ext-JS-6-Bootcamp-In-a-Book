@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.define(&#39;PatientChart.view.patientinfo.graphs.Pie&#39;, {
+    extend: &#39;Ext.chart.PolarChart&#39;,
+    alias: &#39;widget.dietpiechart&#39;,
+    requires: [
+        &#39;PatientChart.view.patientinfo.graphs.PieController&#39;,
+        &#39;Ext.chart.series.Pie&#39;,
+        &#39;Ext.chart.interactions.ItemHighlight&#39;,
+        &#39;Ext.chart.interactions.Rotate&#39;
+    ],
+
+    controller: &#39;patientinfo-graphs-pie&#39;,
+    bind: {
+        store: &#39;{PatientDiet}&#39;
+    },
+    interactions: [&#39;rotate&#39;],
+    legend: true,
+    series: {
+        type: &#39;pie&#39;,
+
+        label: {
+            field: &#39;label&#39;
+        },
+        xField: &#39;qty&#39;,
+        donut: 30,
+        tooltip: {
+            trackMouse: true,
+            renderer: function(tooltip, record) {
+                var total = 0;
+                record.store.each(function(rec) {
+                    total += rec.get(&#39;qty&#39;);
+                });
+                tooltip.setHtml(
+                    record.get(&#39;label&#39;) + &quot;: &quot; + Math.round(record.get(&#39;qty&#39;) / total * 100) + &#39;%&#39;
+                );
+            }
+        }
+    }
+});</pre>
+</body>
+</html>

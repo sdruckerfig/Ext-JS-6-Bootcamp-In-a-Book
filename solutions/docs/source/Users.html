@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.define(&#39;PatientChart.view.admin.users.Users&#39;, {
+    extend: &#39;Ext.window.Window&#39;,
+    alias: &#39;widget.editusers&#39;,
+    requires: [
+        &#39;PatientChart.view.admin.users.UsersController&#39;,
+        &#39;PatientChart.view.admin.users.UsersModel&#39;,
+        &#39;Ext.tree.plugin.TreeViewDragDrop&#39;,
+        &#39;Ext.grid.plugin.CellEditing&#39;
+    ],
+
+    controller: &#39;admin-users-users&#39;,
+    viewModel: {
+        type: &#39;admin-users-users&#39;
+    },
+    width: 250,
+    height: 500,
+    title: &#39;Edit Users&#39;,
+    layout: &#39;fit&#39;,
+    autoShow: true,
+    constrain: true,
+    items: [{
+        xtype: &#39;treepanel&#39;,
+        bind: {
+            selection: &#39;{selectedNode}&#39;,
+            store: &#39;{Users}&#39;
+        },
+        plugins: [{
+            ptype: &#39;cellediting&#39;,
+            clicksToEdit: 2
+        }],
+        viewConfig: {
+            plugins: [{
+                ptype: &#39;treeviewdragdrop&#39;,
+                appendOnly: true,
+                nodeHighlightOnDrop: true,
+                nodeHighlightOnRepair: true
+            }]
+        },
+        columns: [{
+            xtype: &#39;treecolumn&#39;,
+            dataIndex: &#39;text&#39;,
+            text: &#39;Departments/Users&#39;,
+            flex: 1,
+            editor: {
+                xtype: &#39;textfield&#39;,
+                allowBlank: false,
+                allowOnlyWhitespace: false,
+                maxLength: 100
+            }
+        }],
+        listeners: {
+            &#39;edit&#39;: &#39;onNodeEdit&#39;
+        }
+
+    }],
+    dockedItems: [{
+        xtype: &#39;toolbar&#39;,
+        dock: &#39;bottom&#39;,
+        defaults: {
+            flex: 1
+        },
+        items: [{
+            text: &#39;Add&#39;,
+            bind: {
+                disabled: &#39;{!selectedNode}&#39;
+            },
+            handler: &#39;onAddNode&#39;
+        }, {
+            text: &#39;Delete&#39;,
+            bind: {
+                disabled: &#39;{!selectedNode}&#39;
+            },
+            handler: &#39;onDeleteNode&#39;
+        }]
+    }]
+
+
+});</pre>
+</body>
+</html>

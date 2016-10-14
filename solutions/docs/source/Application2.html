@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='PatientChart-Application'>/**
+</span> * The main application class. An instance of this class is created by app.js when it
+ * calls Ext.application(). This is the ideal place to handle application launch and
+ * initialization details.
+ */
+Ext.define(&#39;PatientChart.Application&#39;, {
+    extend: &#39;Ext.app.Application&#39;,
+
+<span id='PatientChart-Application-cfg-name'>    name: &#39;PatientChart&#39;,
+</span>
+    requires: [
+        &#39;PatientChart.view.viewport.Viewport&#39;,
+        &#39;PatientChart.AppDefaults&#39;
+    ],
+
+<span id='PatientChart-Application-cfg-stores'>    stores: [
+</span>        // TODO: add global / shared stores here
+    ],
+
+<span id='PatientChart-Application-property-controllers'>    controllers: [&#39;Main&#39;],
+</span>
+<span id='PatientChart-Application-method-launch'>    launch: function() {
+</span>        Ext.state.Manager.setProvider(
+            Ext.create(&#39;Ext.state.LocalStorageProvider&#39;)
+        );
+        Ext.create(&#39;PatientChart.view.viewport.Viewport&#39;);
+    },
+
+<span id='PatientChart-Application-method-onAppUpdate'>    onAppUpdate: function() {
+</span>        Ext.Msg.confirm(&#39;Application Update&#39;, &#39;This application has an update, reload?&#39;,
+            function(choice) {
+                if (choice === &#39;yes&#39;) {
+                    window.location.reload();
+                }
+            }
+        );
+    }
+});</pre>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.define(&#39;PatientChart.view.viewport.Navigation&#39;, {
+    extend: &#39;Ext.panel.Panel&#39;,
+    requires: [
+        &#39;PatientChart.view.viewport.NavigationController&#39;,
+        &#39;Ext.layout.container.VBox&#39;,
+        &#39;Ext.button.Button&#39;,
+        &#39;Ext.button.Split&#39;,
+        &#39;Ext.menu.Menu&#39;,
+        &#39;Ext.menu.Item&#39;,
+        &#39;Ext.ux.BoxReorderer&#39;
+    ],
+    controller: &#39;viewport-navigation&#39;,
+    alias: &#39;widget.mainnavbar&#39;,
+    plugins: Ext.create(&#39;Ext.ux.BoxReorderer&#39;, {
+        listeners: {
+            &#39;Drop&#39;: function(plugin, container) {
+                container.fireEvent(&#39;drop&#39;)
+            }
+        }
+    }),
+    stateEvents: [&#39;drop&#39;],
+
+    stateful: true,
+    stateId: &#39;mainnavbar&#39;,
+
+    width: 170,
+    bodyPadding: 5,
+    title: &#39;Navigate&#39;,
+    header: false,
+    layout: {
+        type: &#39;vbox&#39;,
+        align: &#39;stretch&#39;
+    },
+    defaults: {
+        xtype: &#39;splitbutton&#39;,
+        height: 45,
+        margin: &#39;0 0 10 0&#39;,
+        toggleGroup: &#39;perspectives&#39;,
+        allowDepress: false
+    },
+    items: [{
+        xtype: &#39;component&#39;,
+        width: 150,
+        height: 133,
+        cls: &#39;drextlogo&#39;,
+        itemId: &#39;drextlogo&#39;
+    }, {
+        text: &#39;Administer&#39;,
+        iconCls: &#39;btnAdminIcon&#39;,
+        itemId: &#39;btnAdminperspective&#39;,
+        bind: {
+            disabled: &#39;{!isAdmin}&#39;
+        },
+        menu: {
+         
+            items: [{
+                text: &#39;Allergies&#39;,
+                iconCls: &#39;nose&#39;,
+                itemId: &#39;allergies&#39;
+            }, {
+                text: &#39;Pre-Existing Conditions&#39;,
+                iconCls: &#39;bottleOfPills&#39;,
+                itemId: &#39;preexistingconditions&#39;
+            }, {
+                text: &#39;Billing Codes/Procedures&#39;,
+                iconCls: &#39;medicalBag&#39;,
+                itemId: &#39;billingcodes&#39;
+            }, {
+                text: &#39;User Accounts&#39;,
+                iconCls: &#39;userAccounts&#39;,
+                itemId: &#39;editusers&#39;
+            }],
+            listeners: {
+                click: &#39;onAdminMenuItemClick&#39;
+            }
+        },
+        listeners: {
+            click: &#39;onAdminPerspectiveClick&#39;,
+            arrowclick: &#39;onAdminPerspectiveClick&#39;
+        }
+    }, {
+        text: &#39;Patients&#39;,
+        iconCls: &#39;btnPatientsIcon&#39;,
+        itemId: &#39;btnPatientinfoperspective&#39;,
+        bind: {
+            disabled: &#39;{!isAdmin}&#39;
+        },
+        menu: {
+            items: [{
+                text: &#39;Search&#39;,
+                iconCls: &#39;patientFind&#39;
+            }, {
+                iconCls: &#39;patientAdd&#39;,
+                text: &#39;Add New&#39;
+            }]
+        },
+        // step 2
+        listeners: {
+            click: &#39;onPatientPerspectiveClick&#39;,
+            arrowclick: &#39;onPatientPerspectiveClick&#39;
+        }
+    }, {
+        text: &#39;Research&#39;,
+        iconCls: &#39;btnResearchIcon&#39;,
+        itemId: &#39;btnResearchperspective&#39;,
+        menu: {
+            items: [{
+                text: &#39;Clinical Trials&#39;,
+                iconCls: &#39;injection&#39;,
+                itemId: &#39;clinicaltrialswindow&#39;
+            }, {
+                text: &#39;Hospital Stats&#39;,
+                iconCls: &#39;hospital&#39;,
+                itemId: &#39;hospitalstatswindow&#39;
+            }, {
+                text: &#39;Hospital Procedures&#39;,
+                iconCls: &#39;stethoscope&#39;,
+                itemId: &#39;hospitalinfotreegrid&#39;
+            }],
+            listeners: {
+                click: &#39;onResearchMenuItemClick&#39;
+            }
+        },
+        listeners: {
+            click: &#39;onResearchPerspectiveClick&#39;,
+            arrowclick: &#39;onResearchPerspectiveClick&#39;
+        }
+    }, {
+        xtype: &#39;button&#39;,
+        itemId: &#39;btnAbout&#39;,
+        text: &#39;About&#39;,
+        iconCls: &#39;btnAbout&#39;,
+        toggleGroup: null,
+        listeners: {
+            click: &#39;onAboutClick&#39;
+        }
+    }, {
+        xtype: &#39;button&#39;,
+        text: &#39;Log Out&#39;,
+        iconCls: &#39;btnLogout&#39;,
+        handler: &#39;onLogoutClick&#39;,
+        itemId: &#39;btnLogout&#39;
+    }],
+    dockedItems: [{
+        xtype: &#39;toolbar&#39;,
+        dock: &#39;bottom&#39;,
+        style: {
+            &#39;border-top-width&#39;: &#39;1px !important&#39;
+        },
+        items: [{
+            xtype: &#39;tbtext&#39;,
+            flex: 1,
+            style: {
+                &#39;text-align&#39;: &#39;center&#39;
+            },
+            bind: {
+                text: &#39;{userName}&#39;
+            }
+        }]
+    }],
+
+
+    getState: function() {
+        var panelState = this.callParent(arguments);
+        Ext.apply(
+            panelState, {
+                itemOrder: Ext.Array.pluck(this.items.items, &quot;itemId&quot;)
+            }
+        );
+        console.log(&#39;getstate&#39;,panelState);
+        return panelState;
+    },
+    applyState: function(state) {
+
+        var buttonOrder = state.itemOrder;
+        this.callParent(arguments);
+        var lastItem = null;
+        console.log(&#39;buttonOrder&#39;, buttonOrder);
+        if (buttonOrder) {
+            for (var i = buttonOrder.length -1; i&gt;0; i--) {
+                var cmp = this.down(&#39;#&#39; + buttonOrder[i]);
+                this.moveBefore(cmp, lastItem);
+                lastItem = cmp;
+            }
+        }
+    }
+});</pre>
+</body>
+</html>

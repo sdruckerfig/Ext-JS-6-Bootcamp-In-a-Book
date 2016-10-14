@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js">Ext.define(&#39;PatientChart.view.admin.allergies.Allergies&#39;, {
+    extend: &#39;Ext.window.Window&#39;,
+    alias: &#39;widget.allergies&#39;,
+    requires: [
+        &#39;PatientChart.view.admin.allergies.AllergiesModel&#39;,
+        &#39;PatientChart.view.admin.allergies.AllergiesController&#39;
+    ],
+    controller: &quot;admin-allergies-allergies&quot;,
+    viewModel: {
+        type: &quot;admin-allergies-allergies&quot;
+    },
+    stateful: true,
+    stateId: &#39;allergiesAdminWindow&#39;,
+    constrain: true,
+    width: 400,
+    height: 250,
+    layout: &#39;fit&#39;,
+    title: &#39;Edit Allergy Types&#39;,
+    items: [{
+        xtype: &#39;grid&#39;,
+        reference: &#39;grid&#39;,
+        bind: {
+            selection: &#39;{selectedRecord}&#39;
+        },
+        header: false,
+        store: &#39;Allergies&#39;,
+        columns: [{
+            xtype: &#39;gridcolumn&#39;,
+            dataIndex: &#39;text&#39;,
+            text: &#39;Label&#39;,
+            flex: 1,
+            editor: {
+                xtype: &#39;textfield&#39;,
+                allowBlank: false
+            }
+        }],
+        plugins: [{
+            ptype: &#39;rowediting&#39;,
+            listeners: {
+                edit: &#39;onRowEditingEdit&#39;,
+                canceledit: &#39;onRowEditingCancelEdit&#39;
+            }
+        }],
+        dockedItems: [{
+            xtype: &#39;toolbar&#39;,
+            dock: &#39;bottom&#39;,
+            height: 30,
+            items: [{
+                xtype: &#39;tbtext&#39;,
+                flex: 1,
+                reference: &#39;lastupdated&#39;,
+                bind: {
+                    text: &#39;Updated: {grid.selection.updatedate:date(\&#39;m/d/Y H:i a\&#39;)} by {grid.selection.updateuser}&#39;
+                }
+            }]
+        }]
+    }],
+    tools: [{
+        xtype: &#39;tool&#39;,
+        type: &#39;plus&#39;,
+        callback: &#39;onAddRecord&#39;
+    }, {
+        xtype: &#39;tool&#39;,
+        type: &#39;minus&#39;,
+        callback: &#39;onDeleteRecords&#39;,
+        bind: {
+            disabled: &#39;{!selectedRecord}&#39;
+        }
+    }, {
+        xtype: &#39;tool&#39;,
+        type: &#39;refresh&#39;,
+        callback: &#39;onRefresh&#39;
+    }]
+});</pre>
+</body>
+</html>
