@@ -1,0 +1,105 @@
+/* Admin button and menu icons */
+
+.btnAdminIcon {
+    background-image: url(../../resources/images/doctor.png);
+    width: 24px !important;
+    height: 24px !important;
+    position: absolute;
+    left: 0px; 
+}
+
+.nose {
+    background-image: url(../../resources/images/nose.png);
+}
+
+.hospital {
+    background-image: url(../../resources/images/bed.png);
+}
+
+.injection {
+    background-image: url(../../resources/images/injection.png);
+}
+
+.bottleOfPills {
+    background-image: url(../../resources/images/bottle_of_pills.png);
+}
+
+.medicalBag {
+    background-image: url(../../resources/images/medical_bag.png);
+}
+
+.patientFind {
+    background-image: url(../../resources/images/user_find.png);
+}
+
+.patientAdd {
+    background-image: url(../../resources/images/users_add.png);
+}
+
+
+.stethoscope {
+    background-image: url(../../resources/images/stethoscope.png);
+}
+
+.btnPatientsIcon {
+    background-image: url(../../resources/images/patient.png);
+    width: 24px !important;
+    height: 24px !important;
+    position: absolute;
+    left: 0px;
+}
+
+.btnResearchIcon {
+    background-image: url(../../resources/images/environment_information.png);
+    width: 24px !important;
+    height: 24px !important;
+    position: absolute;
+    left: 0px;
+}
+
+.btnAbout {
+    background-image: url(../../resources/images/application_enterprise_information.png);
+    width: 24px !important;
+    height: 24px !important;
+    position: absolute;
+    left: 0px;
+}
+
+.btnLogout {
+    background-image: url(../../resources/images/exit.png);
+    width: 24px !important;
+    height: 24px !important;
+    position: absolute;
+    left: 0px;
+}
+
+
+.ctTitle {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.ctPrompt {
+    display: inline-block;
+    width: 80px;
+ }
+
+.patientMediaAsset {
+  width: 150px; 
+  height: 190px;
+  text-align: center;
+  float: left;
+  margin: 20px;
+ }
+
+.patientMediaAsset img {
+  width: 150px; 
+  height: 150px;
+  border-radius: 10px;
+}
+
+.drextlogo {
+     background-image: url(../../resources/images/DoctorExt.png);
+     background-repeat: no-repeat;
+     background-size: cover;
+}
