@@ -21,7 +21,8 @@ Ext.define('PatientChart.view.viewport.Viewport', {
             collapsible: true,
             region: 'west',
             split: true,
-            splitterResize: false
+            splitterResize: false,
+            collapseMode: 'mini'
         }, {
             region: 'center',
             cls: 'appBackground',
