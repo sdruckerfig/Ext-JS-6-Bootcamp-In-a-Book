@@ -1,0 +1,17 @@
+[{
+    name: 'Full Body - Skeletal',
+    type: 'Skeletal',
+    spriteClass: 'skeletal',
+    segmentWidth: 255,
+    segmentHeight: 560,
+    segments: 16,
+    imagesPerClass: 4
+}, {
+    name: 'Full Body - Muscular',
+    type: 'Muscular',
+    spriteClass: 'muscular',
+    segmentWidth: 255,
+    segmentHeight: 560,
+    segments: 20,
+    imagesPerClass: 4
+}]
