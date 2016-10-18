@@ -1,7 +1,7 @@
 Ext.define('PatientChart.view.patientinfo.PatientInfo', {
     extend: 'Ext.panel.Panel',
 
-    alias: 'widget.patientinfo',
+    alias: 'widget.patientinfoperspective',
 
     requires: [
         'PatientChart.view.patientinfo.PatientInfoController',
