@@ -29,6 +29,7 @@ Ext.define('PatientChart.view.viewport.Navigation', {
         text: 'Administer',
         iconCls: 'btnAdminIcon',
         itemId: 'btnAdminperspective',
+        // step 21
         menu: {
             width: 195,
             items: [{
@@ -102,5 +103,9 @@ Ext.define('PatientChart.view.viewport.Navigation', {
         listeners: {
             click: 'onAboutClick'
         }
-    }]
+    }
+
+    // step 26
+
+    ]
 });
