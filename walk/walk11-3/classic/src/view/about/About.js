@@ -11,7 +11,7 @@ Ext.define('PatientChart.view.about.About', {
     height: 300,
     title: 'About Doctor Ext',
     html: Ext.get('aboutDoctorExt').dom.outerHTML,
-    cls: 'credits'
+    cls: 'credits',
 
     dockedItems: [{
         xtype: 'toolbar',
