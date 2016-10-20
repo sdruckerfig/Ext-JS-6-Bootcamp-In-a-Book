@@ -205,7 +205,7 @@ Ext.define('PatientChart.view.viewport.Navigation', {
                     type: 'vbox',
                     align: 'stretch'
                 },
-                height: 50,
+                width: 170,
                 bodyPadding: 5,
                 collapseMode: 'mini'
             });
@@ -219,7 +219,7 @@ Ext.define('PatientChart.view.viewport.Navigation', {
                     type: 'hbox',
                     align: 'stretch'
                 },
-                width: 170,
+                height: 50,
                 bodyPadding: 0
             });
 
