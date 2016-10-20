@@ -52,7 +52,6 @@ Ext.define('PatientChart.view.viewport.Navigation', {
     defaults: {
         xtype: 'splitbutton',
         height: 45,
-        margin: '0 0 10 0',
         toggleGroup: 'perspectives',
         allowDepress: false
     },
@@ -208,7 +207,7 @@ Ext.define('PatientChart.view.viewport.Navigation', {
                 }
             });
             this.defaults.flex = null;
-
+            this.defaults.margin = '0 0 10 0';
         } else {
            
             Ext.apply(this, {
@@ -219,6 +218,7 @@ Ext.define('PatientChart.view.viewport.Navigation', {
             });
 
             this.defaults.flex = 1;
+            this.defaults.margin = '0 5 0 0';
             for (var i=0; i<this.items.length; i++) {
                 this.items[i].iconCls = null;
             }
