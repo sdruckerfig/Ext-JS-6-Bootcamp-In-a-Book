@@ -1,0 +1,41 @@
+{
+	"children": [{
+		"text": "Accounting",
+		"nodetype": "department",
+		"icon": "resources/images/businesspeople.png",
+		"expanded": true,
+		"children": [{
+			"text": "Bobby Hayes",
+			"icon" : "resources/images/user_generic_blue.png",
+			"nodetype": "user",
+			"loaded": true,
+			"leaf" : true
+		}]
+	}, {
+		"text": "Training",
+		"nodetype": "department",
+		"icon": "resources/images/businesspeople.png",
+		"expanded": true,
+		"children": [{
+			"text": "Steve Drucker",
+			"icon" : "resources/images/user_generic_blue.png",
+			"nodetype": "user",
+			"loaded": true,
+			"leaf" : true
+		},
+		{
+			"text": "Dave Watts",
+			"icon" : "resources/images/user_generic_blue.png",
+			"nodetype": "user",
+			"loaded": true,
+			"leaf" : true
+		},
+		{
+			"text": "Christopher Rhodes",
+			"icon" : "resources/images/user_generic_blue.png",
+			"nodetype": "user",
+			"loaded": true,
+			"leaf" : true
+		}]
+	}]
+}
