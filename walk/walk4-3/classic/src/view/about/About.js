@@ -1,3 +1,4 @@
+
 Ext.define('PatientChart.view.about.About', {
     extend: 'Ext.window.Window',
     mixins: ['Ext.ux.mixins.WindowAnimations'],
@@ -10,8 +11,12 @@ Ext.define('PatientChart.view.about.About', {
     width: 400,
     height: 300,
     title: 'About Doctor Ext',
-    html: Ext.get('aboutDoctorExt').dom.outerHTML,
     cls: 'credits',
+   
+    initComponent: function() {
+        Ext.apply(this,{html: Ext.get('aboutDoctorExt').dom.outerHTML});
+        this.callParent(arguments);
+    },
 
     dockedItems: [{
         xtype: 'toolbar',
