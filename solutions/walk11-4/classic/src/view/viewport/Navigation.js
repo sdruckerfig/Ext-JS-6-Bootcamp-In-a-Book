@@ -21,19 +21,17 @@ Ext.define('PatientChart.view.viewport.Navigation', {
             }
         }),
         */
-        'responsive'
+        // 'responsive'
     ],
     stateEvents: ['drop'],
 
     stateful: true,
     stateId: 'mainnavbar',
 
+    /*
     responsiveConfig: {
         'tall': {
-            region: 'north',
-            height: 50,
-            bodyPadding: 0,
-            collapseMode: 'mini'
+
         },
         'wide': {
             region: 'west',
@@ -41,8 +39,9 @@ Ext.define('PatientChart.view.viewport.Navigation', {
             bodyPadding: 5
         }
     },
+    */
 
-    
+
     title: 'Navigate',
     header: false,
     collapsible: true,
@@ -64,10 +63,10 @@ Ext.define('PatientChart.view.viewport.Navigation', {
         itemId: 'drextlogo',
         responsiveConfig: {
             'tall': {
-               hidden: true
+                hidden: true
             },
             'wide': {
-              hidden: false
+                hidden: false
             }
         }
     }, {
@@ -194,6 +193,7 @@ Ext.define('PatientChart.view.viewport.Navigation', {
         }]
     }],
 
+
     initComponent: function() {
 
         var vp = this.up('viewport');
@@ -204,23 +204,34 @@ Ext.define('PatientChart.view.viewport.Navigation', {
                 layout: {
                     type: 'vbox',
                     align: 'stretch'
-                }
+                },
+                height: 50,
+                bodyPadding: 5,
+                collapseMode: 'mini'
             });
             this.defaults.flex = null;
             this.defaults.margin = '0 0 10 0';
+
         } else {
-           
+
             Ext.apply(this, {
                 layout: {
                     type: 'hbox',
                     align: 'stretch'
-                }
+                },
+                width: 170,
+                bodyPadding: 0
             });
 
             this.defaults.flex = 1;
             this.defaults.margin = '0 5 0 0';
-            for (var i=0; i<this.items.length; i++) {
+
+            // remove icons
+            for (var i = 0; i < this.items.length; i++) {
                 this.items[i].iconCls = null;
+                if (i == this.items.length - 1) {
+                    this.items[i].margin = '0 0 0 0';
+                }
             }
         }
 

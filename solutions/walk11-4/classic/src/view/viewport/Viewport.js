@@ -16,10 +16,7 @@ Ext.define('PatientChart.view.viewport.Viewport', {
 
     layout: 'border',
 
-    items: [{
-            xtype: 'mainnavbar',
-            reference: 'navbar'
-        }, {
+    items: [ {
             region: 'center',
             cls: 'appBackground',
             hideHeader: true
@@ -29,8 +26,9 @@ Ext.define('PatientChart.view.viewport.Viewport', {
     listeners: {
         resize: {
             fn: 'onViewportResize',
-            buffer: 100
-        }
+            buffer: 50
+        },
+        boxready : 'onViewportResize'
     }
 
 });

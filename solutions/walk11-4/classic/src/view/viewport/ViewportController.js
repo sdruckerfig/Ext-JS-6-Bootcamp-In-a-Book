@@ -8,10 +8,16 @@ Ext.define('PatientChart.view.viewport.ViewportController', {
     	var newOrientation = (width > height ? "wide" : "tall");
     	
     	if (oldOrientation != newOrientation) {
-    		this.lookupReference('navbar').destroy();
+
+            var nb = this.lookupReference('navbar');
+    		if (nb) {
+                nb.destroy();
+            }
+
     		this.getView().add({
     			xtype: 'mainnavbar',
-    			reference: 'navbar'
+    			reference: 'navbar',
+                region : newOrientation == "wide" ? "west" : "north"
     		});
     	}
     }
