@@ -115,7 +115,8 @@ Ext.define('PatientChart.view.research.clinicaltrails.ClinicalTrials', {
     }],
     listeners: {
         afterrender: 'onAfterRender'
-    },
+    }
+    /*,
 
     dockedItems: [{
         xtype: 'pagingtoolbar',
@@ -127,5 +128,6 @@ Ext.define('PatientChart.view.research.clinicaltrails.ClinicalTrials', {
             store: '{ClinicalTrials}'
         }
     }]
+    */
 
 });

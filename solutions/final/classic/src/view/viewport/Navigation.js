@@ -11,39 +11,52 @@ Ext.define('PatientChart.view.viewport.Navigation', {
     ],
     controller: 'viewport-navigation',
     alias: 'widget.mainnavbar',
-    plugins: Ext.create('Ext.ux.BoxReorderer', {
-        listeners: {
-            'Drop': function(plugin, container) {
-                container.fireEvent('drop')
+    /*
+    plugins: [
+        Ext.create('Ext.ux.BoxReorderer', {
+            listeners: {
+                'Drop': function(plugin, container) {
+                    container.fireEvent('drop')
+                }
             }
-        }
-    }),
+        })
+    ],
+
     stateEvents: ['drop'],
 
     stateful: true,
     stateId: 'mainnavbar',
+    */
 
-    width: 170,
-    bodyPadding: 5,
     title: 'Navigate',
     header: false,
-    layout: {
-        type: 'vbox',
-        align: 'stretch'
-    },
+    collapsible: true,
+    split: true,
+    splitterResize: false,
+
     defaults: {
         xtype: 'splitbutton',
         height: 45,
-        margin: '0 0 10 0',
         toggleGroup: 'perspectives',
         allowDepress: false
     },
     items: [{
         xtype: 'component',
+     
         width: 150,
         height: 133,
         cls: 'drextlogo',
-        itemId: 'drextlogo'
+        itemId: 'drextlogo',
+        // step 16
+        plugins: 'responsive',
+        responsiveConfig: {
+            'tall': {
+                hidden: true
+            },
+            'wide': {
+                hidden: false
+            }
+        }
     }, {
         text: 'Administer',
         iconCls: 'btnAdminIcon',
@@ -52,7 +65,7 @@ Ext.define('PatientChart.view.viewport.Navigation', {
             disabled: '{!isAdmin}'
         },
         menu: {
-         
+
             items: [{
                 text: 'Allergies',
                 iconCls: 'nose',
@@ -143,6 +156,15 @@ Ext.define('PatientChart.view.viewport.Navigation', {
     }],
     dockedItems: [{
         xtype: 'toolbar',
+        plugins: ['responsive'],
+        responsiveConfig: {
+            tall: {
+                hidden: true
+            },
+            wide: {
+                hidden: false
+            }
+        },
         dock: 'bottom',
         style: {
             'border-top-width': '1px !important'
@@ -160,6 +182,51 @@ Ext.define('PatientChart.view.viewport.Navigation', {
     }],
 
 
+    initComponent: function() {
+
+        var vp = this.up('viewport');
+
+        if (vp.getWidth() > vp.getHeight()) {
+
+            Ext.apply(this, {
+                layout: {
+                    type: 'vbox',
+                    align: 'stretch'
+                },
+                width: 170,
+                bodyPadding: 5
+            });
+            this.defaults.flex = null;
+            this.defaults.margin = '0 0 10 0';
+
+        } else {
+
+            Ext.apply(this, {
+                layout: {
+                    type: 'hbox',
+                    align: 'stretch'
+                },
+                height: 50,
+                bodyPadding: 0,
+                collapseMode: 'mini'
+            });
+
+            this.defaults.flex = 1;
+            this.defaults.margin = '0 5 0 0';
+
+            // remove icons
+            for (var i = 0; i < this.items.length; i++) {
+                this.items[i].iconCls = null;
+                if (i == this.items.length - 1) {
+                    this.items[i].margin = '0 0 0 0';
+                }
+            }
+        }
+
+        this.callParent(arguments);
+    }
+
+    /*
     getState: function() {
         var panelState = this.callParent(arguments);
         Ext.apply(
@@ -167,7 +234,7 @@ Ext.define('PatientChart.view.viewport.Navigation', {
                 itemOrder: Ext.Array.pluck(this.items.items, "itemId")
             }
         );
-        console.log('getstate',panelState);
+
         return panelState;
     },
     applyState: function(state) {
@@ -175,13 +242,14 @@ Ext.define('PatientChart.view.viewport.Navigation', {
         var buttonOrder = state.itemOrder;
         this.callParent(arguments);
         var lastItem = null;
-        console.log('buttonOrder', buttonOrder);
+
         if (buttonOrder) {
-            for (var i = buttonOrder.length -1; i>0; i--) {
+            for (var i = buttonOrder.length - 1; i > 0; i--) {
                 var cmp = this.down('#' + buttonOrder[i]);
                 this.moveBefore(cmp, lastItem);
                 lastItem = cmp;
             }
         }
     }
+    */
 });

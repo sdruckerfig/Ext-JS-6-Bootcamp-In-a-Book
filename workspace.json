@@ -3,7 +3,9 @@
      *  An array of the paths to all the applications present in this workspace
      */
     "apps": [
-        "solutions/walk2-3"
+        "solutions/walk2-3",
+        "filedragdrop",
+        "solutions/filedragdrop"
     ],
 
     /**

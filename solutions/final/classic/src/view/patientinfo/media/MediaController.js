@@ -19,8 +19,6 @@ Ext.define('PatientChart.view.patientinfo.media.MediaController', {
 
         if (!this.gearMenu) {
             this.gearMenu = Ext.create('Ext.menu.Menu', {
-                width: 100,
-                plain: true,
                 items: [{
                     xtype: 'menuitem',
                     text: 'Show All',
