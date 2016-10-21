@@ -220,6 +220,10 @@
         {
             "path": "app.js",
             "bundle": true
+        },
+        {
+            "path" : "//cdn.tinymce.com/4/tinymce.min.js",
+            "bundle" : false
         }
     ],
 

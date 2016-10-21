@@ -28,7 +28,7 @@ Ext.define('PatientChart.view.viewport.Viewport', {
             fn: 'onViewportResize',
             buffer: 50
         },
-        boxready : 'onViewportResize'
+        boxready : 'onViewportBoxReady'
     }
 
 });
