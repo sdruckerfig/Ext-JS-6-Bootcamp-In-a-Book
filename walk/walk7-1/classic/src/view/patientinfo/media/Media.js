@@ -13,12 +13,11 @@ Ext.define('PatientChart.view.patientinfo.media.Media', {
         bind: {
             store: '{PatientMediaAssets}'
         },
-        plugins: [
-            Ext.create('Ext.ux.DataView.Animated', {
-                duration: 550,
-                idProperty: 'id'
-            })
-        ],
+        plugins: [{
+            ptype: 'ux-animated-dataview',
+            duration: 550,
+            idProperty: 'id'
+        }],
         scrollable: true,
         itemCls: 'patientMediaAsset',
         itemTpl: [

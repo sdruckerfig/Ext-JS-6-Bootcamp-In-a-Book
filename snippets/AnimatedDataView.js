@@ -1,10 +1,9 @@
 /**
  * @author Ed Spencer (http://sencha.com)
  * Transition plugin for DataViews
- * Modified by Steve Drucker to not fail on bound stores in Ext 5/Ext 6
  */
 Ext.define('Ext.ux.DataView.Animated', {
-    alias: 'plugin.ux-animated-dataview',
+     alias: 'plugin.ux-animated-dataview',
 
     /**
      * @property defaults
