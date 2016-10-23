@@ -168,7 +168,6 @@ Ext.define('PatientChart.view.viewport.Navigation', {
                 itemOrder: Ext.Array.pluck(this.items.items, "itemId")
             }
         );
-        console.log('getstate', panelState);
         return panelState;
     },
     applyState: function(state) {
@@ -176,7 +175,6 @@ Ext.define('PatientChart.view.viewport.Navigation', {
         var buttonOrder = state.itemOrder;
         this.callParent(arguments);
         var lastItem = null;
-        console.log('buttonOrder', buttonOrder);
         if (buttonOrder) {
             for (var i = buttonOrder.length - 1; i > 0; i--) {
                 var cmp = this.down('#' + buttonOrder[i]);

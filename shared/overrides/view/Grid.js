@@ -435,4 +435,12 @@ Ext.define('Shared.overrides.view.Grid', {
         );
         return result;
     }
+},
+function() {
+
+    if (Ext.getVersion().major > 5) {
+       console.log(
+        "Shared.overrides.view.Grid patch may not be compatible with this version of Ext JS"
+       );
+    }
 });

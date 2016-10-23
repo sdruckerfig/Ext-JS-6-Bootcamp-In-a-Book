@@ -26,6 +26,10 @@ Ext.define('PatientChart.view.patientinfo.procedures.Procedures', {
         }, {
             type: 'refresh',
             callback: 'onRefresh'
+        },
+        {
+            type: 'print',
+            callback: 'onDownload'
         }]
     }, {
         xtype: 'patientprocedureform',

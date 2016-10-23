@@ -5,7 +5,7 @@ Ext.define('PatientChart.view.patientinfo.media.Media', {
         'PatientChart.view.patientinfo.media.MediaController',
         'Ext.ux.DataView.Animated'
     ],
-
+    
     controller: 'patientinfo-media-media',
     layout: 'fit',
     items: [{

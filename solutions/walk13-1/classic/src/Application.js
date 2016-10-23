@@ -3,6 +3,10 @@
  * calls Ext.application(). This is the ideal place to handle application launch and
  * initialization details.
  */
+
+
+
+
 Ext.define('PatientChart.Application', {
     extend: 'Ext.app.Application',
 
@@ -10,7 +14,8 @@ Ext.define('PatientChart.Application', {
 
     requires: [
         'PatientChart.view.viewport.Viewport',
-        'PatientChart.AppDefaults'
+        'PatientChart.AppDefaults',
+        'Shared.overrides.view.Grid'
     ],
 
     stores: [
@@ -23,7 +28,50 @@ Ext.define('PatientChart.Application', {
         Ext.state.Manager.setProvider(
             Ext.create('Ext.state.LocalStorageProvider')
         );
-        Ext.create('PatientChart.view.viewport.Viewport');
+
+        var loadOptions = Ext.Object.fromQueryString(location.search);
+
+        if (!loadOptions.test) {
+            Ext.create('PatientChart.view.viewport.Viewport');
+        } else {
+
+            // step 3
+            this.loadTests();
+
+        }
+
+    },
+
+    loadTests: function() {
+
+
+        Ext.util.CSS.swapStyleSheet('jasmine', 'jasmine/jasmine.css');
+
+        Ext.Loader.loadScript({
+            'url': 'jasmine/jasmine.js',
+            scope: window
+        });
+
+        Ext.Loader.loadScript({
+            'url': 'jasmine/jasmine-html.js',
+            scope: window
+        });
+
+        Ext.Loader.loadScript({
+            'url': 'jasmine/boot.js',
+            scope: window
+        });
+
+        // walkthrough 12-2,step 5
+        Ext.Loader.loadScript({
+            url: 'jasminetests/PreExistingConditionsStore.js',
+            scope: window
+        });
+
+        Ext.defer(function() {
+            window.runJasmine();
+        }, 1000, window);
+
     },
 
     onAppUpdate: function() {

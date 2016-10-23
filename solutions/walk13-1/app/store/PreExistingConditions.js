@@ -6,7 +6,7 @@ Ext.define('PatientChart.store.PreExistingConditions', {
         'Ext.util.Sorter'
     ],
 
-    autoLoad: true,
+    // autoLoad: true,
     model: 'PatientChart.model.PreExistingCondition',
     sorters: {
         property: 'text'

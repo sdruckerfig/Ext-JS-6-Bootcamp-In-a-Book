@@ -128,6 +128,12 @@ Ext.define('PatientChart.view.patientinfo.procedures.ProceduresController', {
             },
             scope: this
         });
+    },
+
+    onDownload: function(owner, tool, event) {
+
+      owner.downloadExcelXml();
+
     }
 
 
