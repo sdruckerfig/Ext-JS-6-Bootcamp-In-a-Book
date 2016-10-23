@@ -11,13 +11,14 @@ Ext.define('PatientChart.view.viewport.Navigation', {
     ],
     controller: 'viewport-navigation',
     alias: 'widget.mainnavbar',
-    plugins: Ext.create('Ext.ux.BoxReorderer', {
+    plugins: [{
+        ptype: 'boxreorderer',
         listeners: {
             'Drop': function(plugin, container) {
                 container.fireEvent('drop')
             }
         }
-    }),
+    }],
     stateEvents: ['drop'],
 
     stateful: true,
@@ -169,7 +170,7 @@ Ext.define('PatientChart.view.viewport.Navigation', {
                 itemOrder: Ext.Array.pluck(this.items.items, "itemId")
             }
         );
-        console.log('getstate',panelState);
+        console.log('getstate', panelState);
         return panelState;
     },
     applyState: function(state) {
@@ -179,7 +180,7 @@ Ext.define('PatientChart.view.viewport.Navigation', {
         var lastItem = null;
         console.log('buttonOrder', buttonOrder);
         if (buttonOrder) {
-            for (var i = buttonOrder.length -1; i>0; i--) {
+            for (var i = buttonOrder.length - 1; i > 0; i--) {
                 var cmp = this.down('#' + buttonOrder[i]);
                 this.moveBefore(cmp, lastItem);
                 lastItem = cmp;

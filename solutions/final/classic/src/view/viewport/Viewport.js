@@ -16,11 +16,14 @@ Ext.define('PatientChart.view.viewport.Viewport', {
 
     layout: 'border',
 
-    items: [{
+    items: [
+   
+    {
         region: 'center',
         cls: 'appBackground',
         hideHeader: true
     }],
+  
     listeners: {
         resize: {
             fn: 'onViewportResize',

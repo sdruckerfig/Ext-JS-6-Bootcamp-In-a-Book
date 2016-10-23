@@ -11,13 +11,14 @@ Ext.define('PatientChart.view.viewport.Navigation', {
     ],
     controller: 'viewport-navigation',
     alias: 'widget.mainnavbar',
-    plugins: Ext.create('Ext.ux.BoxReorderer', {
+        plugins: [{
+        ptype :'boxreorderer',
         listeners: {
             'Drop': function(plugin, container) {
                 container.fireEvent('drop')
             }
         }
-    }),
+    }],
     stateEvents: ['drop'],
 
     stateful: true,
