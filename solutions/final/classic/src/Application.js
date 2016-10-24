@@ -10,7 +10,8 @@ Ext.define('PatientChart.Application', {
 
     requires: [
         'PatientChart.view.viewport.Viewport',
-        'PatientChart.AppDefaults'
+        'PatientChart.AppDefaults',
+        'Shared.overrides.view.Grid'
     ],
 
     stores: [
