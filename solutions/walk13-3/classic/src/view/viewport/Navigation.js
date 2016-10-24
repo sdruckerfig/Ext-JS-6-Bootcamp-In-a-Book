@@ -191,10 +191,8 @@ Ext.define('PatientChart.view.viewport.Navigation', {
 
         var vp = this.up('viewport');
 
-       
-
         if (vp.getWidth() > vp.getHeight()) {
-
+          
             Ext.apply(this, {
                 layout: {
                     type: 'vbox',
@@ -205,7 +203,7 @@ Ext.define('PatientChart.view.viewport.Navigation', {
             });
             this.defaults.flex = null;
             this.defaults.margin = '0 0 10 0';
-
+          
         } else {
 
             Ext.apply(this, {
@@ -221,13 +219,6 @@ Ext.define('PatientChart.view.viewport.Navigation', {
             this.defaults.flex = 1;
             this.defaults.margin = '0 5 0 0';
 
-            // remove icons
-            for (var i = 0; i < this.items.length; i++) {
-                this.items[i].iconCls = null;
-                if (i == this.items.length - 1) {
-                    this.items[i].margin = '0 0 0 0';
-                }
-            }
         }
 
         this.callParent(arguments);
@@ -257,6 +248,21 @@ Ext.define('PatientChart.view.viewport.Navigation', {
                 this.moveBefore(cmp, lastItem);
                 lastItem = cmp;
             }
+        }
+    },
+
+    listeners: {
+
+        'afterrender' : function(cmp) {
+
+            var vp = this.up('viewport');
+            if (vp.getWidth() < vp.getHeight()) {
+                var buttons = cmp.query('button');
+                for (var i=0; i<buttons.length; i++) {
+                    buttons[i].setIconCls('');
+                }
+            }
+
         }
     }
 
