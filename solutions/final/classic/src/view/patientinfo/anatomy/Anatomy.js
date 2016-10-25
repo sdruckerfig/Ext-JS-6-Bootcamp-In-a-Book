@@ -77,7 +77,13 @@ Ext.define('PatientChart.view.patientinfo.anatomy.Anatomy', {
         }
     ],
     listeners: {
-        afterrender: 'onPanelAfterRender'
+        'rotate': {
+            element: 'body',
+            fn: 'onRotate',
+            stopPropagation: true,
+            preventDefault: true,
+            buffer: 50
+        }
     }
 
 });
