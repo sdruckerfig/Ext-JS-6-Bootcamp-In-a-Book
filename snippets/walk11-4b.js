@@ -37,15 +37,15 @@ initComponent: function() {
 
  listeners: {
 
-     'afterrender': function(cmp) {
+    'afterrender' : function(cmp) {
 
-         var vp = this.up('viewport');
-         if (vp.getWidth() < vp.getHeight()) {
-             var buttons = cmp.query('button');
-             for (var i = 0; i < buttons.length; i++) {
-                 buttons[i].setIconCls('');
-             }
-         }
+        var vp = this.up('viewport');
+        if (vp.getWidth() < vp.getHeight()) {
+            var buttons = cmp.query('button');
+            for (var i=0; i<buttons.length; i++) {
+                buttons[i].setIconCls('');
+            }
+        }
 
-     }
- }
+    }
+}
