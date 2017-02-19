@@ -25,7 +25,10 @@ Ext.define('PatientChart.controller.Main', {
         'PatientChart.view.research.Research',
         'PatientChart.view.research.clinicaltrails.ClinicalTrials',
         'PatientChart.view.patientinfo.Chooser',
-        'PatientChart.view.admin.users.Users'
+        'PatientChart.view.admin.users.Users',
+        'PatientChart.view.research.hospitalinfo.HospitalInfo',
+        'PatientChart.view.research.hospitals.Hospitals'
+
     ],
 
     models: [
