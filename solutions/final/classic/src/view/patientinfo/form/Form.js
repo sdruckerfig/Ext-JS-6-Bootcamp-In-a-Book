@@ -8,7 +8,13 @@ Ext.define('PatientChart.view.patientinfo.form.Form', {
         'Ext.form.RadioGroup',
         'Ext.form.field.File',
         'Ext.form.field.Tag',
-        'Ext.form.FieldSet'
+        'Ext.form.FieldSet',
+        'Ext.form.field.Date',
+        'Ext.panel.Tool',
+        'Ext.form.field.Hidden',
+        'Ext.form.field.Checkbox',
+        'Ext.form.CheckboxGroup'
+
     ],
     viewModel: {
         type: 'patientinfo-form-form'
@@ -171,11 +177,15 @@ Ext.define('PatientChart.view.patientinfo.form.Form', {
         defaults: {
             anchor: '100%'
         },
-        items: [{
+        items: [
+      
+        {
             xtype: 'filefield',
             fieldLabel: 'Upload Image',
             name: 'profilePhoto'
-        }, {
+        },
+       
+         {
             xtype: 'tagfield',
             fieldLabel: 'Allergies',
             name: 'allergies',
@@ -200,7 +210,9 @@ Ext.define('PatientChart.view.patientinfo.form.Form', {
                     boxLabel: 'Box Label'
                 }]
             }]
-        }, {
+        },
+        
+         {
             xtype: 'tinymce',
             height: 300,
             fieldLabel: 'Notes',

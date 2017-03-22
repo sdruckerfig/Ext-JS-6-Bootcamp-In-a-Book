@@ -3,6 +3,7 @@ Ext.define('PatientChart.view.patientinfo.form.FormController', {
 	alias: 'controller.patientinfo-form-form',
 
 	onFormBeforeRender: function(component, eOpts) {
+		
 		var pc = this.lookupReference('preexistingconditions');
 		var s = Ext.getStore('PreExistingConditions');
 		if (s.getCount() == 0) {
@@ -20,6 +21,7 @@ Ext.define('PatientChart.view.patientinfo.form.FormController', {
 			}
 			pc.add(cboxes);
 		}
+
 	},
 
 

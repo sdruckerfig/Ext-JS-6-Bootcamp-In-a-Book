@@ -26,6 +26,7 @@ Ext.define('PatientChart.view.research.clinicaltrails.ClinicalTrials', {
             xtype: 'grid',
             region: 'center',
             header: false,
+            reserveScrollbar: true,
             flex: 1,
             stateId: 'researchClinicalTrialsGrid',
             stateful: true,
@@ -115,7 +116,9 @@ Ext.define('PatientChart.view.research.clinicaltrails.ClinicalTrials', {
     }],
     listeners: {
         afterrender: 'onAfterRender'
-    },
+    }
+
+    /*,
 
     dockedItems: [{
         xtype: 'pagingtoolbar',
@@ -127,5 +130,7 @@ Ext.define('PatientChart.view.research.clinicaltrails.ClinicalTrials', {
             store: '{ClinicalTrials}'
         }
     }]
+
+    */
 
 });

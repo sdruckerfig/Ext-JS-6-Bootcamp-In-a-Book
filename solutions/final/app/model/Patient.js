@@ -3,7 +3,10 @@ Ext.define('PatientChart.model.Patient', {
     requires: [
         'Ext.data.field.Date',
         'Ext.data.proxy.Rest',
-        'Ext.data.reader.Json'
+        'Ext.data.reader.Json',
+        'Ext.data.validator.Presence',
+        'Ext.data.validator.Email',
+        'Ext.data.validator.Inclusion'
     ],
     fields: [{
             name: 'id',

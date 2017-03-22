@@ -36,7 +36,9 @@ Ext.define('PatientChart.view.patientinfo.PatientInfo', {
         removePanelHeader: false,
         tabPosition: 'bottom',
         deferredRender: false,
-        items: [{
+        items: [
+       
+        {
             xtype: 'patientform',
             reference: 'patientform',
             title: 'Patient Info',
@@ -44,11 +46,15 @@ Ext.define('PatientChart.view.patientinfo.PatientInfo', {
                 xtype: 'tool',
                 type: 'save'
             }]
-        }, {
+        },
+       
+         {
             xtype: 'patientprocedures',
             title: 'Procedures',
             reference: 'procedures'
-        }, {
+        }
+        
+        , {
             xtype: 'patientmedia',
             title: 'Media',
             reference: 'media'
