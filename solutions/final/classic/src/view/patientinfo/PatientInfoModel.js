@@ -3,7 +3,8 @@ Ext.define('PatientChart.view.patientinfo.PatientInfoModel', {
     alias: 'viewmodel.patientinfo-patientinfo',
     requires: [
     'PatientChart.model.PatientDailyStat',
-    'PatientChart.model.PatientVisit'
+    'PatientChart.model.PatientVisit',
+    'PatientChart.model.PatientMediaAsset'
     ],
     data: {
         searchFilter: '',

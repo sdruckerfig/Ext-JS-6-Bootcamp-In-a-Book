@@ -10,7 +10,8 @@ Ext.define('PatientChart.view.patientinfo.PatientInfo', {
         'PatientChart.view.patientinfo.form.Form',
         'PatientChart.view.patientinfo.graphs.Graphs',
         'PatientChart.view.patientinfo.media.Media',
-        'PatientChart.view.patientinfo.procedures.Procedures'
+        'PatientChart.view.patientinfo.procedures.Procedures',
+        'Ext.tab.Panel'
     ],
 
     controller: 'patientinfo-patientinfo',

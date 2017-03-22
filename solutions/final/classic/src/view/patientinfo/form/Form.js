@@ -3,7 +3,12 @@ Ext.define('PatientChart.view.patientinfo.form.Form', {
     alias: 'widget.patientform',
     requires: [
         'PatientChart.view.patientinfo.form.FormModel',
-        'PatientChart.view.patientinfo.form.FormController'
+        'PatientChart.view.patientinfo.form.FormController',
+        'Ext.form.FieldContainer',
+        'Ext.form.RadioGroup',
+        'Ext.form.field.File',
+        'Ext.form.field.Tag',
+        'Ext.form.FieldSet'
     ],
     viewModel: {
         type: 'patientinfo-form-form'
